@@ -6,14 +6,13 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
-
 using namespace std;
 typedef long long ll;
 
-void countingSort(vector<int> &p, vector<int> &c) {
+void countingSort(vector<int>& p, vector<int>& c) {
 	int n = p.size();
 	vector<int> cnt(n, 0);
-	for (auto &x : c) { cnt[x]++; }
+	for (auto& x : c) { cnt[x]++; }
 
 	vector<int> newP(n);
 	vector<int> pos(n); pos[0] = 0;
@@ -27,7 +26,7 @@ void countingSort(vector<int> &p, vector<int> &c) {
 
 //Builds the suffix array (lexicographical ordering of the suffixes defined by their start idx) of s in O(nlogn)
 //sufA[i] gives the start index in s of the ith suffix
-void suffArray(string s, vector<int> &sufA, vector<int> &lcp) {
+void suffArray(string s, vector<int>& sufA, vector<int>& lcp) {
 	s.push_back('#');
 	int n = s.size();
 	vector<int> p(n), c(n);
@@ -78,7 +77,7 @@ void suffArray(string s, vector<int> &sufA, vector<int> &lcp) {
 }
 
 //Checks if t is a substring of s in O(|t|log|s|)
-bool isSubstr(string &s, string &t, vector<int> &sufA) {
+bool isSubstr(string& s, string& t, vector<int>& sufA) {
 	int l = 0, r = s.size();
 	while (l <= r) {
 		int mid = (l + r) >> 1;
@@ -96,7 +95,7 @@ bool isSubstr(string &s, string &t, vector<int> &sufA) {
 }
 
 //Counts how many times t appears as a substring of s in O(|t|log|s|)
-int countSubstr(string &s, string &t, vector<int> &sufA) {
+int countSubstr(string& s, string& t, vector<int>& sufA) {
 	int firstOcc = -1, lastOcc = -2;
 
 	//At k = 0, find the first occ of the substr, at k = 1, the last occ
@@ -123,7 +122,7 @@ int countSubstr(string &s, string &t, vector<int> &sufA) {
 }
 
 //Counts the number of different substrings in s in O(n)
-ll numOfDifSubstr(string &s, vector<int> &sufA, vector<int> &lcp) {
+ll numOfDifSubstr(string& s, vector<int>& sufA, vector<int>& lcp) {
 	ll res = 0; int n = s.size();
 	for (int i = 1; i <= n; i++) {
 		res += (n - sufA[i] - lcp[i]);
@@ -132,7 +131,7 @@ ll numOfDifSubstr(string &s, vector<int> &sufA, vector<int> &lcp) {
 }
 
 //Finds the longest common substring between s and t
-string LCSubstr(string &s, string &t) {
+string LCSubstr(string& s, string& t) {
 	string tt = s + '$' + t;		//'$' > '#'
 	vector<int> sufA, lcp;
 	suffArray(tt, sufA, lcp);
@@ -153,7 +152,7 @@ string LCSubstr(string &s, string &t) {
 }
 
 //Finds the kth distinct substring in the corresponding string in O(n)
-string findKthDistinct(string &s, ll k, vector<int>& sufA, vector<int>& lcp) {
+string findKthDistinct(string& s, ll k, vector<int>& sufA, vector<int>& lcp) {
 	int n = s.size(), idx = -1, len = -1;
 	for (int i = 1; i <= n; i++) {
 		ll curSub = n - sufA[i] - lcp[i];
@@ -190,12 +189,4 @@ pair<int, int> findKthSubstr(ll& k, int l, int r, int rem, int n, vector<int>& s
 	pair<int, int> c1 = findKthSubstr(k, l, idx - 1, rem, n, sufA, st);
 	if (c1.first != -1) { return c1; }
 	return findKthSubstr(k, idx, r, rem, n, sufA, st);
-}
-
-
-
-int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0), cout.tie(0);
-	
 }

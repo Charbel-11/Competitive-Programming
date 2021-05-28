@@ -15,8 +15,7 @@ struct node { vector<edge> edges; };
 
 struct graph {
 	vector<node> nodes;
-	vector<vector<int>> D;
-	vector<vector<int>> helper;
+	vector<vector<int>> D, helper;
 	int n;
 	graph(int _n) : n(_n) { nodes.resize(n); }
 

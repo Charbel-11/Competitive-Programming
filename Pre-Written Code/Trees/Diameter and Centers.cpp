@@ -38,7 +38,6 @@ struct tree {
 
 	//To find all possible endpoints of the diameter, after storing all d2s such that dist2[d2] = diameter in the set of endpoints,
 	//we need another dfs from any d2 (vector dist(n, -1) where dist[d2] = 0 and dfs(d2, -1, dist)) and add all i such that dist[i] = diameter
-	//Same proof as the one to find #diameters
 	void findDiameter(int &diameter, int &d1, int &d2) {
 		diameter = 0; d1 = d2 = root;
 		vector<int> dist(n, -1);
@@ -123,7 +122,7 @@ struct tree {
 		d2 = p.first; diameter = p.second;
 	}
 	//Can be modified to return both centers if the diameter is odd
-	//u should be the endpoint of the diameter which is not the root
+	//u should be the endpoint of the diameter which is not the root (so, the tree should be rooted at the other endpoint)
 	int findCenter(int u, int diameter, vector<int> &parent) {
 		diameter >>= 1;
 		while (diameter--) { u = parent[u]; }

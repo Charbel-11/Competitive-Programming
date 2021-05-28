@@ -80,3 +80,16 @@ int count(node *cur, int key) {
 	if (cur->val > key) { return count(cur->l, key); }
 	else { return sz(cur->l) + cur->freq + count(cur->r, key); }
 }
+
+void dfs(node* cur, vector<int>& res) {
+	if (!cur) { return; }
+	dfs(cur->l, res);
+	for (int i = 0; i < cur->freq; i++) { res.push_back(cur->val); }
+	dfs(cur->r, res);
+}
+
+vector<int> getAllValues(node* root) {
+	vector<int> res;
+	dfs(root, res);
+	return move(res);
+}

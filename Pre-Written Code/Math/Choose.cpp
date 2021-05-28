@@ -5,12 +5,10 @@ typedef long long ll;
 const ll mod = 1e9 + 7;
 
 ll comb[1000][1000];
-
 //A choose B up to 1000C1000
 void fillComb() {
 	int limit = 1000;	//change if needed
 	for (int i = 0; i < limit; i++) { comb[i][i] = 1; comb[i][0] = 1; }
-
 	for (int i = 1; i < limit; i++)
 		for (int j = 1; j < i; j++)
 			comb[i][j] = comb[i - 1][j - 1] + comb[i - 1][j];
@@ -37,10 +35,8 @@ void fillFact() {
 	}
 }
 
-//Handles nCk for large n,k
+//Handles nCk with mod for large n,k; uses mult inverse (Assumes mod is prime, otherwise use egcd)
 //Be sure to fillFact() before using this
-//nCk with mod, uses mult inverse
-//Assumes mod is prime, otherwise use egcd
 ll choose(ll n, ll k) {
 	if (k > n) { return 0; }
 	ll num = fact[n], denom = fact[k];

@@ -50,6 +50,7 @@ struct Trie {
 		return vn->link;
 	}
 
+	//Finds the next state starting from v given input ch
 	int go(int v, char ch) {
 		int idx = ch - 'A';
 		node* vn = nodes[v];

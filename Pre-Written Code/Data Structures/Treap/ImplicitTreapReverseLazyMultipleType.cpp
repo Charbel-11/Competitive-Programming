@@ -4,6 +4,12 @@
 using namespace std;
 typedef long long ll;
 
+//Implements following queries:
+//1)Reverse a range
+//2)Set a range to 0 or 1
+//3)Flip a range (0 becomes 1 and 1 becomes 0)
+//4)Find a range sum
+//5)Find max range of equal elements (all 0 or all 1)
 struct node {
 	int priority, size, val;
 	int sum, prefVal, sufVal, maxRange;

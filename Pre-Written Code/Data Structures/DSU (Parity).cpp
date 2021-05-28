@@ -4,7 +4,8 @@
 #include <numeric>
 using namespace std;
 
-//Maintains the parity of the distance of each node to its root (useful if the graph is assumed to be bipartite)
+//Maintains the parity of the distance of each node to its root 
+//With bipartite graphs, parity of dist(u, v)=(dist[u]+dist[v])%2;
 //Need to call find before using dist
 struct DSU {
 	vector<int> rank, parent, dist;
@@ -23,6 +24,7 @@ struct DSU {
 	}
 	int size(int u) { return rank[find(u)]; }
 
+	//Adds the edge (u, v) (assuming u and v were not connected)
 	bool merge(int u, int v) {
 		int ru = find(u), rv = find(v);
 		if (ru == rv) { return false; }

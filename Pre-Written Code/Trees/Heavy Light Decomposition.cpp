@@ -9,7 +9,6 @@
 #include <climits>
 using namespace std;
 typedef long long ll;
-
 vector<int> base;
 
 struct StVal {

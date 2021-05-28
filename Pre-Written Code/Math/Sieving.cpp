@@ -67,6 +67,7 @@ int divisor_function(int n, vector<pair<int, int>> &v) {
 	return res;
 }
 
+//Iterates over all divisors
 void getDivisorsHelper(int i, int curr, vector<pair<int, int>> &v) {
 	if (i == (int)v.size()) { return; }
 	getDivisorsHelper(i + 1, curr, v);
@@ -76,6 +77,7 @@ void getDivisorsHelper(int i, int curr, vector<pair<int, int>> &v) {
 	}
 }
 
+//Prime factorization
 void getDivisors(int x) {
 	vector<pair<int, int>> v;
 	while (x > 1) {
@@ -90,5 +92,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
 
-	cin.ignore(2); return 0;
 }

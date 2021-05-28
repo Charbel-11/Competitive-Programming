@@ -4,7 +4,7 @@
 #include <numeric>
 using namespace std;
 
-//We store the elements of each component
+//We store the elements of each component in children[compRoot]
 //We use a set if ordering is needed, otherwise a vector is enough
 struct DSU {
 	vector<int> parent;
@@ -31,26 +31,3 @@ struct DSU {
 		min.clear(); return true;
 	}
 };
-
-/*
-struct DSU {
-	vector<int> parent;
-	vector<set<int>> children;
-
-	DSU(int n) {
-		parent.resize(n); children.resize(n);
-		iota(parent.begin(), parent.end(), 0);
-		for (int i = 0; i < n; i++) { children[i].insert(v[i]); }
-	}
-
-	int size(int u) { return (int)children[parent[u]].size(); }
-	
-	bool merge(int u, int v) {
-		u = parent[u]; v = parent[v]; if (u == v) { return false; }
-		set<int> &min = (size(u) < size(v)) ? children[u] : children[v];
-		set<int> &max = (size(u) < size(v)) ? children[v] : children[u];
-		for (auto &x : min) { parent[idx[x]] = &max - &*children.begin(); max.insert(x); }
-		min.clear(); return true;
-	}
-};
-*/

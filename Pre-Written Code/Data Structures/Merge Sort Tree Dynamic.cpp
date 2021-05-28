@@ -136,12 +136,11 @@ struct SegTree {
 		st[si] = StVal(st[lC], st[rC]);
 	}
 
+	//Returns number of elements < k in [l..r]
 	int getSmaller(int l, int r, int k) { return getSmaller(l, r, k, 1, 0, n - 1); }
-	int getSmaller(int l, int r, int k, int si, int lo, int hi) {		//returns number of elements < k in [l..r]
+	int getSmaller(int l, int r, int k, int si, int lo, int hi) {		
 		if (lo > r || hi < l) { return 0; }
-		if (l <= lo && hi <= r) {
-			return count(st[si].treap, k - 1);
-		}
+		if (l <= lo && hi <= r) { return count(st[si].treap, k - 1); }
 
 		int mid = (lo + hi) >> 1;
 		if (r <= mid) return getSmaller(l, r, k, si << 1, lo, mid);

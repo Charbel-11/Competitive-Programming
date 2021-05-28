@@ -40,15 +40,15 @@ ll inverse(ll a, ll p = mod) {
 
 
 ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
-// solves the system of congruences:
+// solves the system of congruences for any a, b, n, m:
 // x = a (mod m)
 // x = b (mod n)
 // returns res such that x = res (mod lcm(m,n))
-// no such res => throws 0 (so you must wrap it in try { ... } catch (int _) { ... }
+// no such res => returns -1
 ll CRT(ll a, ll m, ll b, ll n) {
 	b = (b + n - (a%n)) % n;
 	ll d = gcd(m, n);
-	if (b%d != 0) throw 0;
+	if (b % d != 0) return -1;
 
 	ll oldM = m;
 	m /= d; b /= d; n /= d;

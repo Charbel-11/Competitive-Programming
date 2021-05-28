@@ -27,9 +27,8 @@ struct tree {
 
 	tree(int _n, int _r = 0) : n(_n), root(_r) {
 		lg2 = (int)(ceil(log2(n + 1.0)));
-		nodes.resize(n);
-		anc.resize(n + 1); for (auto &x : anc) { x.resize(lg2 + 1, -1); }
-		depth.resize(n, 0);
+		nodes.resize(n); depth.resize(n, 0);
+		anc.resize(n + 1, vector<int>(lg2 + 1, -1));
 	}
 
 	void add_edge(int u, int v) {

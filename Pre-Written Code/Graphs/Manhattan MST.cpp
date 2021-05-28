@@ -9,7 +9,6 @@ using namespace std;
 typedef long long ll;
 
 const int N = 100005;
-const ll mod = 1000 * 1000 * 1000 + 7;
 int n, q, Sq, Mk;
 
 struct DSU {

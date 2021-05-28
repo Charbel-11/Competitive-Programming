@@ -1,14 +1,11 @@
+//O(Eroot(v)) worst case and O(Elog(V)) on average
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 #include <queue>
 using namespace std;
 const int INF = 1 << 30;
-
-/*struct edge {
-	int u, v; bool match = 0; edge() {}
-	edge(int _u, int _v) : u(_u), v(_v) {}
-};*/
 
 struct node { vector<int> edges; };
 

@@ -34,6 +34,7 @@ struct graph {
 			if (!used[x.v]) { scc_dfs2(x.v, used, component); }
 	}
 
+	//Returns a labeling of vertices such that u and v have the same label iff they are strongly connected
 	vector<int> SCC(int &t) {
 		vector<bool> used(n, false);
 		vector<int> order, component, scc(n);
@@ -50,7 +51,6 @@ struct graph {
 		}
 		return move(scc);
 	}
-
 };
 
 int main() {

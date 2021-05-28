@@ -22,7 +22,7 @@ struct node {
 
 int sz(node* t) { return t ? t->size : 0; }
 
-//Apply + propagate
+//Apply + propagate;
 void lazy(node *t) {
 	if (!t || !t->lazy) { return; }
 	t->val += t->lazy;			//lazy operation; CHANGE IT
@@ -34,7 +34,7 @@ void lazy(node *t) {
 
 void operation(node *t) {
 	if (!t) { return; }
-	lazy(t); lazy(t->l); lazy(t->r);
+	lazy(t); lazy(t->l); lazy(t->r);	
 	t->combine();
 }
 
@@ -97,7 +97,7 @@ ll rangeQuery(node *&t, int l, int r) {
 	return ans;
 }
 
-//Adds val to [l,r] (1-indexed) in the array represented by t
+//Adds val to [l,r] (1-indexed) in the array represented by t (lazy update)
 void rangeUpdate(node *&t, int l, int r, ll val) {
 	node *L, *mid, *R;
 	split(t, L, mid, l - 1); split(mid, t, R, r - l + 1);

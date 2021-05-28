@@ -46,7 +46,7 @@ vector<Point> FindCircleCircleIntersections(Point c0, double r0, Point c1, doubl
 	return { P1, P2 };
 }
 
-// Find the tangent points for this circle and external point.
+// Find the tangent points for this circle and external point
 vector<Point> FindTangents(Point &C, double r, Point &P) {
 	Point pt1, pt2;
 	// Find the distance squared from the external point to the circle's center.
@@ -59,8 +59,6 @@ vector<Point> FindTangents(Point &C, double r, Point &P) {
 }
 
 
-
-//CIRCLE
 
 struct Point {
 	Frac x, y; Point() {}
@@ -89,146 +87,13 @@ Point findCircle(ll x1, ll y1, ll x2, ll y2, ll x3, ll y3) {
 }
 
 
-
-
-
-
-//3D
-
-struct Point {
-	double x, y, z; Point() {}
-	Point(double _x, double _y, double _z) :
-		x(_x), y(_y), z(_z) {}
-};
-
-//Finds the tangent length from an external point p to a sphere of radius R (centered at 0)
-double tanLength(Point &p) { return p.x * p.x + p.y * p.y + p.z * p.z - R * R; }
-
-Point sphericalToCartesian(const double &r, const double &lo, const double &la) {
-	return Point(r * sin(la) * cos(lo), r * sin(la) * sin(lo), r * cos(la));
-}
-
-double dist(Point &p1, Point &p2) {
-	double dx = p1.x - p2.x, dy = p1.y - p2.y, dz = p1.z - p2.z;
-	return dx * dx + dy * dy + dz * dz;
-}
-
-void rotatePoint(double &x, double &y, double angle) {
-	double X = x * cos(angle) - y * sin(angle);
-	double Y = x * sin(angle) + y * cos(angle);
-	x = X; y = Y;
-}
-
-double toRadians(double p) { return (p * pi) / 180.0; }
-
-
-
-
-
-
-
-
-//PICK's theorem
-vector<pair<ll, ll>> p;		//points in clockwise order
-int n;
-ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
-
-//Polygon area * 2, need the points in clockwise order
-ll area() {
-	ll a = 0;
-	for (int i = 0; i < n; i++) {
-		a += (p[i].first * p[(i + 1)%n].second - p[(i + 1)%n].first * p[i].second);
-	}
-	return abs(a);
-}
-
-ll bdry() {
-	ll B = 0;
-	for (int i = 0; i < n; i++) {
-		ll x = abs(p[i].first - p[i + 1].first);
-		ll y = abs(p[i].second - p[i + 1].second);
-		B += gcd(x, y);
-	}
-	return B;
-}
-
-
-
-
-
-// Returns whether line ab and line cd intersect (i.e. are not parallel)
-// In which case the intersection point is (x,y)
-bool intersection(int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd, double& x, double& y){
-	int d = (xa - xb)*(yc - yd) - (xc - xd)*(ya - yb);	
-	if (d == 0) { return false; }	//same slope
-	x = -((ll)(xa - xb)*(xc*yd - xd * yc) - (ll)(xc - xd)*(xa*yb - xb * ya)) / (double)(d);
-	y = ((ll)(ya - yb)*(yc*xd - yd * xc) - (ll)(yc - yd)*(ya*xb - yb * xa)) / (double)(d);
-	return true;
-}
-
-// Returns whether (x,y) is (strictly) to the left of the (extended) line from (x1,y1) to (x2,y2)
-bool totheleft(int x, int y, int x1, int y1, int x2, int y2)
-{
-	return (x - x1)*(y - y2) > (x - x2)*(y - y1);
-}
-
-//Line is (x1,y1)->(x2,y2), Point is (x0,y0)
-double lineToPtDist(ll x1, ll y1, ll x2, ll y2, ll x0, ll y0) {
-	ll res = abs((y2 - y1)*x0 - (x2 - x1)*y0 + x2 * y1 - y2 * x1);
-	ll dy = y2 - y1;
-	ll dx = x2 - x1;
-	double den = sqrt(dy*dy + dx * dx);
-
-	return (double)res / den;
-}
-
-
-
-int main() {
-	cin >> n; p.resize(n);
-	for (int i = 0; i < n; i++) {
-		ll x, y; cin >> x >> y; p[i] = { x,y };
-	}
-	p.push_back({ p[0].first, p[0].second });	//add first point in the end too
-	ll I = (area() - bdry()) / 2 + 1;		//Pts with int coordinates in the polygon
-	cout << I << endl;
-}
-
-
-
-
-
-
-
-
-struct Rect {
-	int x1, y1, x2, y2;		//(x1,y1) bot left point and (x2,y2) top right point
-	Rect(int _x1, int _y1, int _x2, int _y2) :x1(_x1), y1(_y1), x2(_x2), y2(_y2) {}
-	int area() { return (y2 - y1)*(x2 - x1); }
-};
-int intersect(Rect r1, Rect r2) {
-	int xOverlap = max(0, min(r1.x2, r2.x2) - max(r1.x1, r2.x1));
-	int yOverlap = max(0, min(r1.y2, r2.y2) - max(r1.y1, r2.y1));
-	return xOverlap * yOverlap;
-}
-Rect intersect2(Rect r1, Rect r2) {
-	int x1 = max(r1.x1, r2.x1), x2 = min(r1.x2, r2.x2);
-	int y1 = max(r1.y1, r2.y1), y2 = min(r1.y2, r2.y2);
-	if (x1 > x2 || y1 > y2) { return Rect(0, 0, 0, 0); }
-	else { return Rect(x1, y1, x2, y2); }
-}
-
-
-
 //CIRCLE INTERSECTION WITH LINE/CIRCLE
 
 typedef long double ld;
-
 ld EPS = 1e-12;
 
 struct PT {
-	ld x, y;
-	PT() {}
+	ld x, y; PT() {}
 	PT(ld x, ld y) : x(x), y(y) {}
 	PT(const PT &p) : x(p.x), y(p.y) {}
 	PT operator + (const PT &p) const { return PT(x + p.x, y + p.y); }
@@ -246,16 +111,12 @@ PT RotateCCW90(PT p) { return PT(-p.y, p.x); }
 // circle centered at c with radius r > 0
 vector<PT> CircleLineIntersection(PT a, PT b, PT c, ld r) {
 	vector<PT> ret;
-	b = b - a;
-	a = a - c;
-	ld A = dot(b, b);
-	ld B = dot(a, b);
-	ld C = dot(a, a) - r * r;
+	b = b - a; a = a - c;	
+	ld A = dot(b, b), B = dot(a, b), C = dot(a, a) - r * r;
 	ld D = B * B - A * C;
-	if (D < -EPS) return ret;
+	if (D < -EPS) { return ret; }
 	ret.push_back(c + a + b * (-B + sqrt(D + EPS)) / A);
-	if (D > EPS)
-		ret.push_back(c + a + b * (-B - sqrt(D)) / A);
+	if (D > EPS) { ret.push_back(c + a + b * (-B - sqrt(D)) / A); }
 	return ret;
 }
 // compute intersection of circle centered at a with radius r
@@ -268,24 +129,8 @@ vector<PT> CircleCircleIntersection(PT a, PT b, ld r, ld R) {
 	ld y = sqrt(r*r - x * x);
 	PT v = (b - a) / d;
 	ret.push_back(a + v * x + RotateCCW90(v)*y);
-	if (y > 0)
-		ret.push_back(a + v * x - RotateCCW90(v)*y);
+	if (y > 0) { ret.push_back(a + v * x - RotateCCW90(v) * y); }
 	return ret;
-}
-
-
-double dot(ll xa, ll ya, ll xb, ll yb) { return xa * xb + ya * yb; }
-double dotSelf(ll xa, ll ya) { return xa * xa + ya * ya; }
-
-//proj of a -> (b,c)
-pair<double, double> proj(ll xa, ll ya, ll xb, ll yb, ll xc, ll yc) { // projection of point A onto line BC
-	pair<double, double> d = { xc - xb, yc - yb };
-	pair<double, double> ans = { xb, yb };
-
-	double tmp = dot(xa - xb, ya - yb, d.first, d.second) / dotSelf(d.first, d.second);
-	d.first *= tmp; d.second *= tmp;
-	ans.first += d.first; ans.second += d.second;
-	return ans;
 }
 
 

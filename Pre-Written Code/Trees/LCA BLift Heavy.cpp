@@ -29,10 +29,9 @@ struct tree {
 
 	tree(int _n, int _r = 0) : n(_n), root(_r) {
 		lg2 = (int)(ceil(log2(n + 0.0)));
-		nodes.resize(n);
+		nodes.resize(n); depth.resize(n, 0);
 		anc.resize(n + 1, vector<int>(lg2 + 1, -1));
 		heavy.resize(n + 1, vector<int>(lg2 + 1, -1));
-		depth.resize(n, 0);
 	}
 
 	void add_edge(int u, int v, int w) {
@@ -78,7 +77,6 @@ struct tree {
 				u = anc[u][i];
 			}
 		}
-
 		if (u == v) { return { u, maxWeight }; }
 
 		for (int i = lg2; i >= 0; i--) {
@@ -93,8 +91,37 @@ struct tree {
 		return { anc[u][0], maxWeight };
 	}
 
+	//Need to preprocess before using!
+	//Returns the LCA of nodes u and v in O(logn)		
+	int LCA(int u, int v) {
+		if (depth[u] < depth[v]) { swap(u, v); }
+
+		for (int i = lg2; i >= 0; i--) {
+			if (depth[u] - (1 << i) >= depth[v])
+				u = anc[u][i];	//furthest parent found is 2^i
+		}
+		if (u == v) { return v; }
+
+		for (int i = lg2; i >= 0; i--) {
+			if (anc[u][i] != anc[v][i]) {
+				u = anc[u][i]; v = anc[v][i];
+			}
+		}
+		return anc[u][0];
+	}
+
 	int dist(int u, int v) {
-		int lca = find(u, v).first;
+		int lca = LCA(u, v);
 		return depth[u] + depth[v] - 2 * depth[lca];
+	}
+
+	//Finds kth parent of u
+	int findKthParent(int u, int k) {
+		int pI = 0;
+		while (k) {
+			if (k & 1) { u = anc[u][pI]; }
+			pI++; k >>= 1;
+		}
+		return u;
 	}
 };

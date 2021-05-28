@@ -223,6 +223,7 @@ struct tree {
 		return ans;
 	}
 
+	//Path update, requires lazy seg tree
 	void update_up(int u, int v, SegTree &st) {
 		int uchain, vchain = chainIdx[v];
 		while (true) {
@@ -248,11 +249,26 @@ struct tree {
 		return StVal(t1, t2);
 	}
 
-	void update(int u, int v, SegTree &st) {
+	//Requires lazy seg tree
+	void updatePath(int u, int v, SegTree &st) {
 		int lca = LCA(u, v);
 		update_up(u, lca, st); update_up(v, lca, st);
 		//We might be updating the lca twice
 	}
+
+	//POINT UPDATES (requires point update in seg tree)
+	/*
+	//For node values
+	void updateVal(int u, int newVal, SegTree& st) {
+		st.update(posInBase[u], newVal);		//
+	}
+	//For edge values, we update the node which has that edge as parent
+	void updateEdgeVal(int eN, int newVal, SegTree& st) {
+		int u1 = edges[eN * 2].u, v1 = edges[eN * 2].v;
+		int lower = (depth[u1] > depth[v1] ? u1 : v1);
+		st.update(posInBase[lower], newVal);
+	}
+	*/
 };
 
 int main() {
@@ -267,7 +283,6 @@ int main() {
 	}
 
 	base.clear(); base.resize(n);
-
 	t.preprocess();
 	t.hld(0, -1);
 	SegTree segT(t.ptr);

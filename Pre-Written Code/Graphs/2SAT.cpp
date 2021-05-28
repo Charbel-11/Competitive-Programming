@@ -12,7 +12,7 @@ struct node { vector<edge> edges; };
 
 struct graph {
 	vector<node> nodes[2]; int n;
-	//_n considers both true and false variables, i.e. n = 2*number of variables
+	//n considers both true and false variables, i.e. n = 2*number of variables
 	graph(int _n) : n(_n) { nodes[0].resize(n); nodes[1].resize(n); }
 
 	//Add the close bu(u) OR bv(v)
