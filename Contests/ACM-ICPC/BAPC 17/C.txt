@@ -1,0 +1,36 @@
+#include <iostream>
+#include <set>
+using namespace std;
+
+int n;
+long long * a;
+
+
+long long gcd(long long a, long long b)
+{
+	if (b == 0) return a;
+	a %= b;
+	return gcd(b, a);
+}
+
+int main() {
+	cin >> n; a = new long long[n];
+	for (int i = 0; i < n; i++) { cin >> a[i]; }
+	set <long long> res; res.insert(a[0]);
+	set <long long> * prev = new set <long long>; prev->insert(a[0]);
+	for (int i = 1; i < n; i++) {
+		set <long long> * temp = new set <long long>;
+		temp->insert(a[i]);
+		res.insert(a[i]);
+		for (auto & v : *prev) {
+			long long val = gcd(v, a[i]);
+			temp->insert(val);
+			res.insert(val);
+		}
+		delete prev;
+		prev = temp;
+	}
+	cout << res.size() << endl;
+
+	return 0;
+}

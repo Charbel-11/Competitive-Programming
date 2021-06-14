@@ -1,0 +1,51 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <numeric>
+using namespace std;
+
+struct DSU {
+	vector<int> rank, parent, maxV, minV;
+
+	DSU(int n) {
+		rank.resize(n, 1); parent.resize(n); maxV.resize(n);
+		iota(parent.begin(), parent.end(), 0);
+		iota(maxV.begin(), maxV.end(), 0);
+	}
+
+	int find(const int u) { return parent[u] == u ? u : (parent[u] = find(parent[u])); }
+	int size(int u) { return rank[find(u)]; }
+
+	bool merge(int u, int v) {
+		u = find(u); v = find(v);
+		if (u == v) { return false; }
+		if (rank[u] < rank[v]) { swap(u, v); }
+		rank[u] += rank[v];	parent[v] = u;
+		maxV[u] = max(maxV[u], maxV[v]);
+		return true;
+	}
+};
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+
+	int n, q; cin >> n >> q;
+	DSU dsu(n), dsuC(n);
+	while (q--) {
+		int t, u, v; cin >> t >> u >> v; u--; v--;
+		if (t == 1) {
+			dsu.merge(u, v);
+		}
+		else if (t == 2) {
+			u = dsuC.maxV[dsuC.find(u)];
+			while (u < v) {
+				dsu.merge(u, u + 1); dsuC.merge(u, u + 1);
+				u = dsuC.maxV[dsuC.find(u)];
+			}
+		}
+		else {
+			cout << (dsu.find(u) == dsu.find(v) ? "YES" : "NO") << '\n';
+		}
+	}
+}
