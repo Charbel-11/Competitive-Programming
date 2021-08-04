@@ -4,6 +4,7 @@
 #include <set>
 #include <cstring>
 #include <vector>
+#include <bitset>
 #include <cmath>
 #include <algorithm>
 
@@ -11,7 +12,7 @@ using namespace std;
 typedef long long ll;
 
 const int M = (int)1e5 + 2;
-bool sums[M + 1];
+bitset<M + 1> dp;
 
 int main() {
 	ios::sync_with_stdio(0);
@@ -21,18 +22,14 @@ int main() {
 	vector<int> nums(n);
 	for (auto &x : nums) { cin >> x; }
 
-	sums[0] = 1;
+	dp[0] = 1;
 	for (int i = 0; i < n; i++) {
-		for (int j = M - 1; j >= 0; j--) {
-			int nxt = j + nums[i];
-			if (j > M) { continue; }
-			sums[nxt] |= sums[j];
-		}
+		dp |= dp << nums[i];
 	}
 
 	vector<int> ans;
 	for (int i = 1; i <= M; i++) {
-		if (sums[i]) { ans.push_back(i); }
+		if (dp[i]) { ans.push_back(i); }
 	}
 
 	cout << ans.size() << '\n';
