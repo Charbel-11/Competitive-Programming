@@ -1,16 +1,19 @@
 #include <iostream>
+#include <array>
 #include <algorithm>
 #include <vector>
 #include <cmath>
+#include <fstream>
 using namespace std;
+
+const int lg = 32;
 
 int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr), cout.tie(nullptr);
 
 	int n, q; cin >> n >> q;
-	int lg = 32;
-	vector<vector<int>> anc(n, vector<int>(lg));
+	vector<array<int, lg>> anc(n);
 
 	for (int i = 0; i < n; i++) {
 		int v; cin >> v; v--;

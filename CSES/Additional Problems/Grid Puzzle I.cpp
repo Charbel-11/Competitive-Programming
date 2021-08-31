@@ -72,30 +72,33 @@ int main() {
 	cin.tie(0); cout.tie(0);
 
 	int n; cin >> n;
-	vector<ll> a(n), b(n); ll S = 0;
-	for (auto& x : a) { cin >> x; S += x; }
-	for (auto& x : b) { cin >> x; S += x; }
-
-	graph g(n * n + 2 * n + 2);
+	graph g(2 * n + 2);
 	int s = g.n - 2, t = g.n - 1;
-	for (int i = 0; i < n * n; i++) { g.add_edge(s, i, 1); }
+
+	int rowS = 0, colS = 0;
 	for (int i = 0; i < n; i++) {
-		for (int j = 0; j < n; j++) { g.add_edge(i * n + j, n * n + i, 1); }
-		for (int j = 0; j < n; j++) { g.add_edge(j * n + i, n * n + n + i, 1); }
-		g.add_edge(n * n + i, t, a[i]);
-		g.add_edge(n * n + n + i, t, b[i]);
+		int cur; cin >> cur; rowS += cur;
+		g.add_edge(s, i, cur);
+	}
+	for (int i = 0; i < n; i++) {
+		int cur; cin >> cur; colS += cur;
+		g.add_edge(n + i, t, cur);
 	}
 
-	if (g.maxFlow(s, t) < S) { cout << -1 << '\n'; }
-	else {
-		vector<string> ans(n, string(n, '.'));
+	if (rowS != colS) { cout << -1 << '\n'; return 0; }
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if (!g.edges[g.nodes[i * n + j].edges[0]].flow) { ans[i][j] = 'X'; }
-			}
+	for (int i = 0; i < n; i++)
+		for (int j = 0; j < n; j++)
+			g.add_edge(i, n + j, 1);
+
+	if (g.maxFlow(s, t) < rowS) { cout << -1 << '\n'; }
+	else {
+		vector<string> grid(n, string(n, '.'));
+
+		for (int i = 4 * n; i < g.edges.size(); i += 2) {
+			if (g.edges[i].flow) { grid[g.edges[i].u][g.edges[i].v - n] = 'X'; }
 		}
 
-		for (auto& s : ans) { cout << s << '\n'; }
+		for (auto& s : grid) { cout << s << '\n'; }
 	}
 }
