@@ -77,3 +77,21 @@ typedef complex<double> point;
 point rotate(point P, point Q, double theta) {
 	return (P - Q) * polar(1.0, theta) + Q;
 }
+
+
+
+//finds the area of the triangle
+long double area(ll x1, ll y1, ll x2, ll y2, ll x3, ll y3) {
+	return abs((x1 * (y2 - y3) + x2 * (y3 - y1) + x3 * (y1 - y2)) / 2.0);
+}
+
+//checks if (x,y) is in the triangle
+bool isInside(ll x1, ll y1, ll x2, ll y2, ll x3, ll y3, ll x, ll y) {
+	long double A = area(x1, y1, x2, y2, x3, y3);
+	long double A1 = area(x, y, x2, y2, x3, y3);
+	long double A2 = area(x1, y1, x, y, x3, y3);
+	long double A3 = area(x1, y1, x2, y2, x, y);
+
+	if (A < eps || A1 < eps || A2 < eps || A3 < eps) { return false; } //if (x,y) is on the border
+	return (abs(A - (A1 + A2 + A3)) < eps);
+}
