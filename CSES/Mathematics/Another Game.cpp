@@ -15,13 +15,13 @@ int main() {
 	int t; cin >> t;
 	while (t--) {
 		int n; cin >> n;
-		vector<int> p(n); for (auto& xx : p) { cin >> xx; }
-
-		int state = 0;
+		
+		bool win = false;
 		for (int i = 0; i < n; i++) {
-			if (i % 2) { state ^= p[i]; }
+			int x; cin >> x;
+			if (x % 2) { win = true; }
 		}
 
-		cout << (state ? "first" : "second") << '\n';
+		cout << (win ? "first" : "second") << '\n';
 	}
 }
