@@ -68,24 +68,26 @@ int divisor_function(int n, vector<pair<int, int>> &v) {
 }
 
 //Iterates over all divisors
-void getDivisorsHelper(int i, int curr, vector<pair<int, int>> &v) {
-	if (i == (int)v.size()) { return; }
-	getDivisorsHelper(i + 1, curr, v);
+void getDivisorsHelper(int i, int curr, vector<int>& divisors, vector<pair<int, int>>& v) {
+	if (i == (int)v.size()) { divisors.push_back(curr); return; }
+	getDivisorsHelper(i + 1, curr, divisors, v);
 	for (int j = 0; j < v[i].second; j++) {
 		curr *= v[i].first;
-		getDivisorsHelper(i + 1, curr, v);
+		getDivisorsHelper(i + 1, curr, divisors, v);
 	}
 }
 
 //Prime factorization
-void getDivisors(int x) {
+vector<int> getDivisors(int x) {
 	vector<pair<int, int>> v;
 	while (x > 1) {
 		int d = spf[x], cnt = 0;
 		while (x % d == 0) { x /= d; cnt++; }
 		v.push_back({ d, cnt });
 	}
-	getDivisorsHelper(0, 1, v);
+	vector<int> divisors;
+	getDivisorsHelper(0, 1, divisors, v);
+	return divisors;
 }
 
 int main() {
