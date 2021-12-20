@@ -23,7 +23,7 @@ struct tree {
 	tree(int _n, int _r = 0) : n(_n), root(_r) { nodes.resize(n); }
 
 	void add_edge(int u, int v) {
-		edge e1(u, v); edge e2(v, u);
+		edge e1(u, v), e2(v, u);
 		nodes[u].edges.push_back(e1);
 		nodes[v].edges.push_back(e2);
 	}

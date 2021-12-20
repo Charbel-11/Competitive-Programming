@@ -123,6 +123,7 @@ struct tree {
 	}
 	//Can be modified to return both centers if the diameter is odd
 	//u should be the endpoint of the diameter which is not the root (so, the tree should be rooted at the other endpoint)
+	//if above function is used, use u = d2
 	int findCenter(int u, int diameter, vector<int> &parent) {
 		diameter >>= 1;
 		while (diameter--) { u = parent[u]; }
