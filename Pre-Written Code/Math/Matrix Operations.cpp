@@ -37,23 +37,6 @@ struct Matrix {
 	}
 };
 
-int matrixRank(Matrix M) {
-	int n = M.n, m = M.m, rank = 0;
-	vector<bool> rowVis(n, false);
-
-	for (int i = 0; i < m; i++) {
-		int j = 0; for (; j < n; j++) 
-			if (!rowVis[j] && M[j][i]) { break; }
-		if (j == n) { continue; }
-		rank++;	rowVis[j] = true;
-		for (int k = i + 1; k < m; k++)	M[j][k] /= M[j][i];
-		for (int k = 0; k < n; k++)	if (k != j && M[k][i]) 
-				for (int p = i + 1; p < m; ++p)
-					M[k][p] -= M[j][p] * M[k][i];
-	}
-	return rank;
-}
-
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
