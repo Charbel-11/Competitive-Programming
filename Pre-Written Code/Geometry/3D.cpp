@@ -21,7 +21,7 @@ Point sphericalToCartesian(const double &r, const double &lo, const double &la) 
 	return Point(r * sin(la) * cos(lo), r * sin(la) * sin(lo), r * cos(la));
 }
 
-double dist(Point &p1, Point &p2) {
+double dist2(Point &p1, Point &p2) {
 	double dx = p1.x - p2.x, dy = p1.y - p2.y, dz = p1.z - p2.z;
 	return dx * dx + dy * dy + dz * dz;
 }
