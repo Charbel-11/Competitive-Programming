@@ -17,10 +17,10 @@ void fillComb() {
 
 // fast exponentiation modulo mod
 ll powe(ll x, ll p) {
-	if (p == 0) return 1;
-	ll w = powe((x*x) % mod, p / 2);
-	if (p & 1) w = (w*x) % mod;
-	return w;
+	ll res = 1;
+	for (; p; p >>= 1, x = (x * x) % mod)
+		if (p & 1) res = (res * x) % mod;
+	return res;
 }
 // modular inverse (mod must be prime)
 ll modinv(ll i) { return powe(i, mod - 2); }

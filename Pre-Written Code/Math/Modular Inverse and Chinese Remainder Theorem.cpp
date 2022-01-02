@@ -14,7 +14,6 @@ ll powe(ll x, ll p) {
 		if (p & 1) res = (res * x) % mod;
 	return res;
 }
-
 // modular inverse (mod must be prime)
 ll modinv(ll i) { return powe(i, mod - 2); }
 
