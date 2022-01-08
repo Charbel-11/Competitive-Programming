@@ -1,50 +1,21 @@
+// https://judge.yosupo.jp/problem/convolution_mod
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 typedef long long ll;
 
-const ll mod = 132120577;
-const ll root = 5;
-const ll invRoot = 52848231;
-const int modPow = 21;
-const ll oddFactor = 63;
-
-/*
-MOD = oddFactor x 2^modPow + 1
-
-Precomputed Constants
-MOD = 998244353    root = 3    invRoot = 332748118    modPow = 23    oddFactor = 119
-MOD = 132120577    root = 5    invRoot = 52848231     modPow = 21    oddFactor = 63
-MOD = 7340033      root = 3    invRoot = 2446678      modPow = 20    oddFactor = 7
-MOD = 786433       root = 10   invRoot = 235930       modPow = 18    oddFactor = 3;
-*/
-
-void generateConstants(const ll& MOD) {
-	auto isPrimitveRoot = [&](ll x) {
-		ll cur = x, N = 1;
-		while (++N != MOD - 1) {
-			cur = (cur * x) % MOD;
-			if (cur == 1) { return false; }
-		}
-		return true;
-	};
-
-	int r = 2; while (!isPrimitveRoot(r)) { r++; }
-	int p = 0; ll cur = MOD - 1, rInv = modInv(r);
-	while ((cur & 1) == 0) { p++; cur >>= 1; }
-
-	cout << "Prime: " << MOD << '\n';
-	cout << "Primitive Root: " << r << '\n';
-	cout << "Inverse of Primitive Root: " << rInv << '\n';
-	cout << "Highest Power of 2 in (Prime-1): " << p << ' ' << (1ll << p) << '\n';
-	cout << "Highest Odd factor of (Prime-1): " << (MOD - 1) / (1ll << p) << '\n';
-}
+const ll mod = 998244353;
+const ll root = 3;
+const ll invRoot = 332748118;
+const int modPow = 23;
+const ll oddFactor = 119;
 
 ll power(ll x, ll n) {
 	ll res = 1;
 	for (; n; n >>= 1, x = (x * x) % mod) {
-		if (n & 1) { res = (res * x) % mod; }
+		if (n & 1) res = (res * x) % mod;
 	}
 	return res;
 }
@@ -96,4 +67,17 @@ vector<ll> polyModMult(vector<ll>& a, vector<ll>& b) {
 
 	while (A.size() > N + M - 1) { A.pop_back(); }
 	return move(A);
+}
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+
+	int n, m; cin >> n >> m;
+	vector<ll> a(n), b(m);
+	for (auto& x : a) { cin >> x; }
+	for (auto& x : b) { cin >> x; }
+
+	auto c = polyModMult(a, b);
+	for (auto& x : c) { cout << x << ' '; }
 }

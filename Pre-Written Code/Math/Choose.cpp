@@ -4,14 +4,14 @@ using namespace std;
 typedef long long ll;
 const ll mod = 1e9 + 7;
 
-ll comb[1000][1000];
+ll choose[1000][1000];
 //A choose B up to 1000C1000
 void fillComb() {
 	int limit = 1000;	//change if needed
-	for (int i = 0; i < limit; i++) { comb[i][i] = 1; comb[i][0] = 1; }
+	for (int i = 0; i < limit; i++) { choose[i][i] = 1; choose[i][0] = 1; }
 	for (int i = 1; i < limit; i++)
 		for (int j = 1; j < i; j++)
-			comb[i][j] = comb[i - 1][j - 1] + comb[i - 1][j];
+			choose[i][j] = (choose[i - 1][j - 1] + choose[i - 1][j]) % mod;
 }
 
 

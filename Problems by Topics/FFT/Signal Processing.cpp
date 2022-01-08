@@ -1,3 +1,5 @@
+// https://cses.fi/problemset/task/2113/
+
 #include <iostream>
 #include <string>
 #include <map>
@@ -56,4 +58,18 @@ vector<ll> multiply(const vector<ll>& a, const vector<ll>& b) {
     vector<ll> result(s);
     for (int i = 0; i < s; i++) { result[i] = round(fa[i].real()); }
     return move(result);
+}
+
+int main() {
+    ios::sync_with_stdio(0);
+    cin.tie(0), cout.tie(0);
+
+    int n, m; cin >> n >> m;
+    vector<ll> a(n), b(m);
+    for (auto& x : a) { cin >> x; }
+    for (auto& x : b) { cin >> x; }
+    reverse(b.begin(), b.end());
+
+    auto c = multiply(a, b);
+    for (auto& x : c) { cout << x << ' '; }
 }

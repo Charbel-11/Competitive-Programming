@@ -1,5 +1,11 @@
 #include <iostream>
+#include <string>
+#include <map>
+#include <set>
+#include <complex>
+#include <cstring>
 #include <vector>
+#include <cmath>
 #include <algorithm>
 using namespace std;
 typedef long long ll;
@@ -10,37 +16,6 @@ const ll invRoot = 52848231;
 const int modPow = 21;
 const ll oddFactor = 63;
 
-/*
-MOD = oddFactor x 2^modPow + 1
-
-Precomputed Constants
-MOD = 998244353    root = 3    invRoot = 332748118    modPow = 23    oddFactor = 119
-MOD = 132120577    root = 5    invRoot = 52848231     modPow = 21    oddFactor = 63
-MOD = 7340033      root = 3    invRoot = 2446678      modPow = 20    oddFactor = 7
-MOD = 786433       root = 10   invRoot = 235930       modPow = 18    oddFactor = 3;
-*/
-
-void generateConstants(const ll& MOD) {
-	auto isPrimitveRoot = [&](ll x) {
-		ll cur = x, N = 1;
-		while (++N != MOD - 1) {
-			cur = (cur * x) % MOD;
-			if (cur == 1) { return false; }
-		}
-		return true;
-	};
-
-	int r = 2; while (!isPrimitveRoot(r)) { r++; }
-	int p = 0; ll cur = MOD - 1, rInv = modInv(r);
-	while ((cur & 1) == 0) { p++; cur >>= 1; }
-
-	cout << "Prime: " << MOD << '\n';
-	cout << "Primitive Root: " << r << '\n';
-	cout << "Inverse of Primitive Root: " << rInv << '\n';
-	cout << "Highest Power of 2 in (Prime-1): " << p << ' ' << (1ll << p) << '\n';
-	cout << "Highest Odd factor of (Prime-1): " << (MOD - 1) / (1ll << p) << '\n';
-}
-
 ll power(ll x, ll n) {
 	ll res = 1;
 	for (; n; n >>= 1, x = (x * x) % mod) {
@@ -48,12 +23,10 @@ ll power(ll x, ll n) {
 	}
 	return res;
 }
-
-// Assumes mod is prime
 ll modInv(ll x) { return power(x, mod - 2); }
 
 void NTT(vector<ll>& a, const ll& curRoot) {
-	int n = (int)a.size(); //Assumes n is a power of 2
+	int n = (int)a.size();
 	for (int i = 1, j = 0; i < n; i++) {
 		int bit = n >> 1;
 		for (; j & bit; bit >>= 1) { j ^= bit; }
@@ -96,4 +69,42 @@ vector<ll> polyModMult(vector<ll>& a, vector<ll>& b) {
 
 	while (A.size() > N + M - 1) { A.pop_back(); }
 	return move(A);
+}
+
+int main() {
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+	freopen("differences.in", "r", stdin);
+
+    int t; cin >> t;
+    while (t--) {
+        int n; cin >> n;
+        int M = n;
+
+        vector<ll> nums(n, 0);
+        for (int i = 0; i < n; i++) {
+            int x; ll f; cin >> x >> f; x--;
+            nums[x] += f; nums[x] %= mod;
+        }
+
+		vector<ll> a = nums, b = nums;
+		reverse(b.begin(), b.end());
+		auto c = polyModMult(a, b);
+
+		vector<ll> ans(n + 1, 0);
+		for (int i = n - 1; i >= 0; i--) {
+			ans[(n - 1) - i] = c[i];
+		}
+		
+		for (int i = 1; i <= n; i++) {
+			ans[i] += ans[i - 1];
+			ans[i] %= mod;
+		}
+
+		int q; cin >> q;
+		while (q--) {
+			int l, r; cin >> l >> r;
+			cout << (ans[r] - ans[l - 1] + mod) % mod << '\n';
+		}
+    }
 }

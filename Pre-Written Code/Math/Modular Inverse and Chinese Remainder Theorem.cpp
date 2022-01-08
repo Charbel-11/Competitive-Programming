@@ -2,16 +2,17 @@
 #include <string>
 #include <vector>
 #include <map>
-
 using namespace std;
 typedef long long ll;
+
 const ll mod = 1e9 + 7;
 
 // fast exponentiation modulo mod
 ll powe(ll x, ll p) {
 	ll res = 1;
-	for (; p; p >>= 1, x = (x * x) % mod)
-		if (p & 1) res = (res * x) % mod;
+	for (; p; p >>= 1, x = (x * x) % mod) {
+		if (p & 1) { res = (res * x) % mod; }
+	}
 	return res;
 }
 // modular inverse (mod must be prime)
@@ -33,23 +34,22 @@ ll egcd(ll a, ll b, ll &x, ll &y) { // MINUS B*Y
 // modular inverse; works for any mod p (coprime with a)
 ll inverse(ll a, ll p = mod) {
 	ll x, y;
-	egcd(a%p + p, p, x, y);
+	egcd(a % p + p, p, x, y);
 	return x % p;
 }
 
 
 ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 // solves the system of congruences for any a, b, n, m:
-// x = a (mod m)
-// x = b (mod n)
+// x = a (mod m)  and   x = b (mod n)
 // returns res such that x = res (mod lcm(m,n))
 // no such res => returns -1
 ll CRT(ll a, ll m, ll b, ll n) {
-	b = (b + n - (a%n)) % n;
+	b = (b + n - (a % n)) % n;
 	ll d = gcd(m, n);
-	if (b % d != 0) return -1;
+	if (b % d != 0) { return -1; }
 
 	ll oldM = m;
 	m /= d; b /= d; n /= d;
-	return ((b*inverse(m, n)) % n)*oldM + a;
+	return ((b * inverse(m, n)) % n) * oldM + a;;
 }
