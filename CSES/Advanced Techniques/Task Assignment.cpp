@@ -108,5 +108,17 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
 
+	int n; cin >> n;
+	vector<vector<ll>> c(n, vector<ll>(n));
+	for (auto& v : c)
+		for (auto& x : v)
+			cin >> x;
 
+	vector<int> Lmate, Rmate;
+	ll minC = MinCostMatching(c, Lmate, Rmate);
+
+	cout << minC << '\n';
+	for (int i = 0; i < n; i++) {
+		cout << i + 1 << " " << Lmate[i] + 1 << '\n';
+	}
 }
