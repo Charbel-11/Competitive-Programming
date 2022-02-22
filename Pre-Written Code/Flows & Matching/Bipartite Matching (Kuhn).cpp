@@ -47,7 +47,8 @@ struct bipartiteGraph {
 	//In Bipartite Graphs (Konig's Theorem)
 	//Max Matching = Min Vertex Cover = Max Flow = Min Cut
 	//Min Path Cover = n - Max Matching
-	int maxMatching() { //With Greedy initialization
+	//Runs in O(nm)
+	int maxMatching() {
 		int w = 0;
 		for (int x = 0; x < n; x++) {
 			if (match[x] != -1) { continue; }

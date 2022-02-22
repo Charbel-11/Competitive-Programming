@@ -1,4 +1,4 @@
-//O(Eroot(v)) worst case and O(Elog(V)) on average
+//O(Eroot(V)) worst case and O(Elog(V)) on average
 
 #include <iostream>
 #include <vector>
@@ -23,12 +23,13 @@ struct bipartiteGraph {
 
 	bool matchingBFS() {
 		fill(level.begin(), level.end(), -1);
-		queue<int> q; for (int i = 1; i <= n; i++)
+		queue<int> q; 
+		for (int i = 1; i <= n; i++){
 			if (!match[i]) { level[i] = 0; q.push(i); }
+		}
 
 		while (!q.empty()) {
 			int cur = q.front(); q.pop();
-			if (!cur) { continue; }
 			for (auto &v : nodes[cur].edges) {
 				if (level[match[v]] == -1) {
 					level[match[v]] = level[cur] + 1;
@@ -41,28 +42,30 @@ struct bipartiteGraph {
 
 	bool matchingDFS(int cur) {
 		if (!cur) { return true; }
-		if (cur) {
-			for (auto &v : nodes[cur].edges) {
-				if (level[match[v]] != level[cur] + 1) { continue; }
-				if (!matchingDFS(match[v])) { continue; }
-				match[v] = cur;	match[cur] = v;	return true;
-			}
-			level[cur] = INF; return false;
+		for (auto &v : nodes[cur].edges) {
+			if (level[match[v]] != level[cur] + 1) { continue; }
+			if (!matchingDFS(match[v])) { continue; }
+			match[v] = cur;	match[cur] = v;	
+			return true;
 		}
-		return true;
+		level[cur] = INF; return false;
 	}
 
 	int hopcroft_karp() {
-		int res = 0; while (matchingBFS())
-			for (int i = 1; i <= n; i++)
-				res += (match[i] == 0 && matchingDFS(i));
+		int res = 0; 
+		while (matchingBFS()){
+			for (int i = 1; i <= n; i++){
+				if (match[i] != 0){ continue; }
+				res += matchingDFS(i);
+			}
+		}
 		return res;
 	}
 
 	void printMaxMatching() {
 		cout << hopcroft_karp() << '\n';
-		for (int i = 1; i <= n; i++) if (match[i])
-			cout << i << " " << match[i] - n << '\n';
+		for (int i = 1; i <= n; i++) 
+			if (match[i]) { cout << i << " " << match[i] - n << '\n'; }
 	}
 };
 
@@ -70,13 +73,12 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
 
-	ios::sync_with_stdio(0);
-	cin.tie(0), cout.tie(0);
-
-	int n, m, k; cin >> n >> m >> k; bipartiteGraph g(n, m);
+	int n, m, k; cin >> n >> m >> k; 
+	bipartiteGraph g(n, m);
 	for (int i = 0; i < k; i++) {
 		int a, b; cin >> a >> b;
 		a--; b--; g.add_edge(a, n + b);
 	}
-	g.printMaxMatching(); cin.ignore(2); return 0;
+	
+	g.printMaxMatching();
 }

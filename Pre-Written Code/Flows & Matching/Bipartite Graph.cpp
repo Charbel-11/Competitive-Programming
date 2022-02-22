@@ -38,7 +38,7 @@ struct bipartiteGraph {
 		nodes.resize(n + m); Z.resize(n + m, 0);
 		match.resize(n + m, -1); vis.resize(n + m, 0);
 	}
-	bipartiteGraph(graph &g) {
+	bipartiteGraph(graph &g) {   // g must be undirected
 		vector<int> color(g.n, -1); int LSize = 0;
 		for (int i = 0; i < g.n; i++) {		//We need to skip nodes in g that we don't want in the bipartite graph
 			if (color[i] != -1) { continue; } 

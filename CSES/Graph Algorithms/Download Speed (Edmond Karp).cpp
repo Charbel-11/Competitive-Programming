@@ -35,8 +35,8 @@ struct graph {
 		while (newFlow) {
 			flow += newFlow; int cur = t;
 			while (cur != s) {
-				int &e = parent[cur];
-				edges[e].flow += newFlow;
+				int& e = parent[cur];
+				edges[e].flow += newFlow; 
 				edges[e ^ 1].flow -= newFlow;
 				cur = edges[e].u;
 			}
@@ -47,7 +47,7 @@ struct graph {
 
 	ll findAugmentingPath(const int s, const int t) {
 		fill(parent.begin(), parent.end(), -1); parent[s] = -2;
-		queue<pair<int, ll>> q; q.push({ s, INF }); 
+		queue<pair<int, ll>> q; q.push({ s, INF });
 
 		while (!q.empty()) {
 			int cur = q.front().first; ll flow = q.front().second; q.pop();
@@ -69,4 +69,13 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
 
+	int n, m; cin >> n >> m;
+	graph g(n);
+	for (int i = 0; i < m; i++) {
+		int u, v; ll c;
+		cin >> u >> v >> c; u--; v--;
+		g.add_edge(u, v, c);
+	}
+
+	cout << g.maxFlow(0, n - 1) << '\n';
 }

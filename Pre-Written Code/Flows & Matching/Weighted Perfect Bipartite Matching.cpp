@@ -17,7 +17,7 @@ using namespace std;
 //cost[i][j] = cost for pairing left node i with right node j (cost is an nxn matrix)
 //matchL[i] = index of right node that left node i pairs with
 //matchR[j] = index of left node that right node j pairs with
-ll MinCostMatching(const vector<vector<ll>>& cost, vector<int>& matchL, vector<int>& matchR) {
+ll MinCostPerfectMatching(const vector<vector<ll>>& cost, vector<int>& matchL, vector<int>& matchR) {
 	int n = (int)cost.size();
 	vector<ll> pL(n, 0), pR(n, 0);
 
@@ -102,17 +102,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
 
-	int n; cin >> n;
-	vector<vector<ll>> c(n, vector<ll>(n));
-	for (auto& v : c)
-		for (auto& x : v)
-			cin >> x;
-
-	vector<int> Lmate, Rmate;
-	ll minC = MinCostMatching(c, Lmate, Rmate);
-
-	cout << minC << '\n';
-	for (int i = 0; i < n; i++) {
-		cout << i + 1 << " " << Lmate[i] + 1 << '\n';
-	}
 }

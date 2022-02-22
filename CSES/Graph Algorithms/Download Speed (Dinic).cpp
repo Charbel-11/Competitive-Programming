@@ -23,8 +23,8 @@ struct graph {
 	void add_edge(const int u, const int v, const ll c1, const ll c2 = 0) {
 		nodes[u].edges.emplace_back(m++);
 		nodes[v].edges.emplace_back(m++);
-		edges.emplace_back(u, v, c1); 
-		edges.emplace_back(v, u, c2); 
+		edges.emplace_back(u, v, c1);
+		edges.emplace_back(v, u, c2);
 	}
 
 	bool getLevelGraph(const int s, const int t) {
@@ -33,32 +33,32 @@ struct graph {
 
 		while (!q.empty()) {
 			int cur = q.front(); q.pop();
-			for (auto &e : nodes[cur].edges) {
+			for (auto& e : nodes[cur].edges) {
 				if (edges[e].cap == edges[e].flow || level[edges[e].v] != -1) { continue; }
 				level[edges[e].v] = level[cur] + 1;
 				q.push(edges[e].v);
 			}
 		}
-		
+
 		return level[t] != -1;
 	}
 
 	ll findAugmentingPath(const int cur, const int t, const ll flow) {
 		if (flow == 0) { return 0; }
 		if (cur == t) { return flow; }
-		
-		for (int &eid = ptr[cur]; eid < (int)nodes[cur].edges.size(); eid++) {
+
+		for (int& eid = ptr[cur]; eid < (int)nodes[cur].edges.size(); eid++) {
 			int e = nodes[cur].edges[eid], v = edges[e].v;
 			if (level[v] != level[cur] + 1 || edges[e].cap == edges[e].flow) { continue; }
-			
+
 			ll new_flow = min(flow, edges[e].cap - edges[e].flow);
-			new_flow = findAugmentingPath(v, t, new_flow); 
+			new_flow = findAugmentingPath(v, t, new_flow);
 			if (!new_flow) { continue; }
-			
+
 			edges[e].flow += new_flow; edges[e ^ 1].flow -= new_flow;
 			return new_flow;
 		}
-		
+
 		return 0;
 	}
 
@@ -69,9 +69,9 @@ struct graph {
 		ll res = 0;
 		while (getLevelGraph(s, t)) {
 			fill(ptr.begin(), ptr.end(), 0);
-			
+
 			ll curFlow = findAugmentingPath(s, t, INF);
-			while (curFlow) { 
+			while (curFlow) {
 				res += curFlow;
 				curFlow = findAugmentingPath(s, t, INF);
 			}
@@ -84,4 +84,13 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
 
+	int n, m; cin >> n >> m;
+	graph g(n);
+	for (int i = 0; i < m; i++) {
+		int u, v; ll c; 
+		cin >> u >> v >> c; u--; v--;
+		g.add_edge(u, v, c);
+	}
+
+	cout << g.maxFlowDinic(0, n - 1) << '\n';
 }
