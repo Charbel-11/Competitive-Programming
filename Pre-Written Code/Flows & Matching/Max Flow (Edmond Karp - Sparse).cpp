@@ -63,6 +63,18 @@ struct graph {
 		}
 		return 0ll;
 	}
+
+	//Assumes we already called maxFlow()
+	vector<edge> getMinCut() {
+		vector<edge> ans;
+		for (int i = 0; i < m; i += 2) {
+			int u = edges[i].u, v = edges[i].v;
+			if ((parent[u] != -1) ^ (parent[v] != -1)) {
+				ans.push_back(edges[i]);
+			}
+		}
+		return move(ans);
+	}
 };
 
 int main() {

@@ -1,3 +1,5 @@
+//https://www.spoj.com/problems/FASTFLOW/
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -78,30 +80,6 @@ struct graph {
 		}
 		return res;
 	}
-
-	//Assumes we already called maxFlow()
-	vector<edge> getMinCut(const int s) {
-		vector<int> parent(n, -1); parent[s] = -2;
-		queue<int> q; q.push(s);
-
-		while (!q.empty()) {
-			int cur = q.front(); q.pop();
-			for (auto& e : nodes[cur].edges) {
-				int next = edges[e].v;
-				if (parent[next] != -1 || edges[e].cap == edges[e].flow) { continue; }
-				parent[next] = e; q.push(next);
-			}
-		}
-
-		vector<edge> ans;
-		for (int i = 0; i < m; i += 2) {
-			int u = edges[i].u, v = edges[i].v;
-			if ((parent[u] != -1) ^ (parent[v] != -1)) {
-				ans.push_back(edges[i]);
-			}
-		}
-		return move(ans);
-	}
 };
 
 int main() {
@@ -111,11 +89,9 @@ int main() {
 	int n, m; cin >> n >> m;
 	graph g(n);
 	for (int i = 0; i < m; i++) {
-		int u, v; cin >> u >> v; u--; v--;
-		g.add_edge(u, v, 1, 1);
+		int u, v; ll c; cin >> u >> v >> c; u--; v--;
+		if (u != v) { g.add_edge(u, v, c, c); }
 	}
-	cout << g.maxFlowDinic(0, n - 1) << '\n';
 
-	auto ans = g.getMinCut(0);
-	for (auto &x : ans) { cout << x.u + 1 << " " << x.v + 1 << '\n'; }
+	cout << g.maxFlowDinic(0, n-1) << '\n';
 }

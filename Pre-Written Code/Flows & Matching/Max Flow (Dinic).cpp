@@ -4,7 +4,7 @@
 #include <queue>
 using namespace std;
 typedef long long ll;
-const ll INF = 1ll << 40;
+const ll INF = 1ll << 40;  //Should be larger than max capacity
 
 struct edge {
 	int u, v; ll cap, flow = 0; edge() {}
@@ -77,6 +77,30 @@ struct graph {
 			}
 		}
 		return res;
+	}
+
+	//Assumes we already called maxFlow()
+	vector<edge> getMinCut(const int s) {
+		vector<int> parent(n, -1); parent[s] = -2;
+		queue<int> q; q.push(s);
+
+		while (!q.empty()) {
+			int cur = q.front(); q.pop();
+			for (auto& e : nodes[cur].edges) {
+				int next = edges[e].v;
+				if (parent[next] != -1 || edges[e].cap == edges[e].flow) { continue; }
+				parent[next] = e; q.push(next);
+			}
+		}
+
+		vector<edge> ans;
+		for (int i = 0; i < m; i += 2) {
+			int u = edges[i].u, v = edges[i].v;
+			if ((parent[u] != -1) ^ (parent[v] != -1)) {
+				ans.push_back(edges[i]);
+			}
+		}
+		return move(ans);
 	}
 };
 
