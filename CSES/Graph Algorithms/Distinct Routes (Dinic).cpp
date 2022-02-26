@@ -23,8 +23,8 @@ struct graph {
 	void add_edge(const int u, const int v, const ll c1, const ll c2 = 0) {
 		nodes[u].edges.emplace_back(m++);
 		nodes[v].edges.emplace_back(m++);
-		edges.emplace_back(u, v, c1); 
-		edges.emplace_back(v, u, c2); 
+		edges.emplace_back(u, v, c1);
+		edges.emplace_back(v, u, c2);
 	}
 
 	bool getLevelGraph(const int s, const int t) {
@@ -33,32 +33,32 @@ struct graph {
 
 		while (!q.empty()) {
 			int cur = q.front(); q.pop();
-			for (auto &e : nodes[cur].edges) {
+			for (auto& e : nodes[cur].edges) {
 				if (edges[e].cap == edges[e].flow || level[edges[e].v] != -1) { continue; }
 				level[edges[e].v] = level[cur] + 1;
 				q.push(edges[e].v);
 			}
 		}
-		
+
 		return level[t] != -1;
 	}
 
 	ll findAugmentingPath(const int cur, const int t, const ll flow) {
 		if (flow == 0) { return 0; }
 		if (cur == t) { return flow; }
-		
-		for (int &eid = ptr[cur]; eid < (int)nodes[cur].edges.size(); eid++) {
+
+		for (int& eid = ptr[cur]; eid < (int)nodes[cur].edges.size(); eid++) {
 			int e = nodes[cur].edges[eid], v = edges[e].v;
 			if (level[v] != level[cur] + 1 || edges[e].cap == edges[e].flow) { continue; }
-			
+
 			ll newFlow = min(flow, edges[e].cap - edges[e].flow);
-			newFlow = findAugmentingPath(v, t, newFlow); 
+			newFlow = findAugmentingPath(v, t, newFlow);
 			if (!newFlow) { continue; }
-			
+
 			edges[e].flow += newFlow; edges[e ^ 1].flow -= newFlow;
 			return newFlow;
 		}
-		
+
 		return 0;
 	}
 
@@ -69,14 +69,24 @@ struct graph {
 		ll res = 0;
 		while (getLevelGraph(s, t)) {
 			fill(ptr.begin(), ptr.end(), 0);
-			
+
 			ll curFlow = findAugmentingPath(s, t, INF);
-			while (curFlow) { 
+			while (curFlow) {
 				res += curFlow;
 				curFlow = findAugmentingPath(s, t, INF);
 			}
 		}
 		return res;
+	}
+
+	void getPath(const int u, vector<int>& path) {
+		path.push_back(u);
+		for (int eId : nodes[u].edges) {
+			auto& e = edges[eId];
+			if (e.flow <= 0) { continue; }
+			e.flow = 0; getPath(e.v, path);
+			break;
+		}
 	}
 };
 
@@ -84,4 +94,20 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
 
+	int n, m; cin >> n >> m;
+	graph g(n);
+	for (int i = 0; i < m; i++) {
+		int u, v; cin >> u >> v; u--; v--;
+		g.add_edge(u, v, 1);
+	}
+
+	int ans = g.maxFlowDinic(0, n - 1);
+	cout << ans << '\n';
+
+	while (ans--) {
+		vector<int> cur; g.getPath(0, cur);
+		cout << cur.size() << '\n';
+		for (auto &x : cur) { cout << x + 1 << ' '; } 
+		cout << '\n';
+	}
 }
