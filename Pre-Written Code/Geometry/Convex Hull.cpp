@@ -20,7 +20,7 @@ struct Point {
 	friend istream& operator >> (istream& is, Point& p) { is >> p.x >> p.y; return is; }
 };
 
-ll crossProduct(Point A, Point B) { return A.x * B.y - A.y * B.x; }
+ll crossProduct(const Point& A, const Point& B) { return A.x * B.y - A.y * B.x; }
 
 //0: Colinear; 1: Clockwise (C is to the right of (AB)); 2: Counterclockwise (C is to the left of (AB))
 int orientation(const Point& A, const Point& B, const Point& C) {

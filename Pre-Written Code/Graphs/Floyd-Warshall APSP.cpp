@@ -2,12 +2,13 @@
 #include <vector>
 #include <algorithm>
 using namespace std;
+typedef long long ll;
 
 const ll INF = 1ll << 60;
 
 struct edge {
-	int u, v, w; edge() {}
-	edge(int _u, int _v, int _w = 0) :
+	int u, v; ll w; edge() {}
+	edge(int _u, int _v, ll _w = 0) :
 		u(_u), v(_v), w(_w) {}
 };
 
@@ -15,11 +16,12 @@ struct node { vector<edge> edges; };
 
 struct graph {
 	vector<node> nodes;
-	vector<vector<int>> D, helper;
+	vector<vector<ll>> D;
+	vector<vector<int>> helper;
 	int n;
 	graph(int _n) : n(_n) { nodes.resize(n); }
 
-	void add_edge(int u, int v, int w = 0) {
+	void add_edge(int u, int v, ll w = 0) {
 		edge e1(u, v, w), e2(v, u, w);
 		nodes[u].edges.push_back(e1);
 		nodes[v].edges.push_back(e2);
@@ -32,7 +34,8 @@ struct graph {
 			for (int j = 0; j < n; j++)
 				helper[i][j] = -1;
 
-		D.resize(n); for (int i = 0; i < n; i++) { D[i].resize(n, INF); D[i][i] = 0; }
+		D.resize(n); 
+		for (int i = 0; i < n; i++) { D[i].resize(n, INF); D[i][i] = 0; }
 
 		for (auto &x : nodes)
 			for (auto &y : x.edges)
@@ -55,8 +58,7 @@ struct graph {
 };
 
 int main() {
-	ios::sync_with_stdio(false);
-	cin.tie(nullptr), cout.tie(nullptr);
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
 
-	cin.ignore(2); return 0;
 }

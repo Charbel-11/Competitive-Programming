@@ -4,8 +4,7 @@
 using namespace std;
 typedef long long ll;
 
-//Building the treap in O(n) doesn't make it that much faster than using the insert 
-//at the end of the array n times
+// Implicit treaps consider the index in an array as (implicit) value, allowing for dynamic insertion/deletion in this array
 struct node {
 	int priority, size;
 	ll val, sum;
