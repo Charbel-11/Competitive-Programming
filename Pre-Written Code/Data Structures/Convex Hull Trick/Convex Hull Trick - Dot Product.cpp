@@ -28,6 +28,7 @@ int orientation(const Point& A, const Point& B, const Point& C) {
 // Given a set of points (Ai,Bi) added with increasing/decreasing Ai and a point (x,y), finds min/max(Ai.x+Bi.y)
 // Additions and queries run in O(log n)
 // We can always swap Bi and Ai if we have points with increasing/decreasing Bi
+// maxCoord^2 should fit in long long
 struct ConvexHullTrick {
 	vector<Point> convexHullBot, convexHullTop;
 

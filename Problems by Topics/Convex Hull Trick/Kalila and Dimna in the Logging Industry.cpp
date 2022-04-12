@@ -1,10 +1,12 @@
+// https://codeforces.com/contest/319/problem/C
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
-typedef long long ll;
+typedef unsigned long long ll;
 
-const ll INF = (ll)4e18; 
+const ll INF = LLONG_MAX;
 
 struct Line {
     ll a, b; // y = ax + b
@@ -24,7 +26,7 @@ struct Node {
 
     void pushDown() {
         if (l < r && !left) {
-            ll m = (l + r) >> 1;
+            ll m = l + (r - l) / 2;
             left = new Node(l, m, f);
             right = new Node(m + 1, r, f);
         }
@@ -38,7 +40,7 @@ struct Node {
         if (f1.eval(r) <= f2.eval(r)) { f = f1; return; }
 
         if (l != r) {
-            ll mid = (l + r) >> 1;
+            ll mid = l + (r - l) / 2;
             if (f1.eval(mid) > f2.eval(mid)) {
                 f = f2; left->update(f1);
             }
@@ -51,7 +53,7 @@ struct Node {
     ll getMin(ll x) const {
         ll ans = f.eval(x);
 
-        ll mid = (l + r) >> 1;
+        ll mid = l + (r - l) / 2;
         if (x <= mid && left) { ans = min(ans, left->getMin(x)); }
         else if (mid < x && right) { ans = min(ans, right->getMin(x)); }
 
@@ -64,9 +66,8 @@ struct Node {
 // We can use doubles if needed; complexity becomes O(log(range/eps))
 struct LiChaoTree {
     ll minX, maxX;
-    Node* rootMin, * rootMax; 
+    Node* rootMin, * rootMax;
 
-    //Make sure maxX * maxSlope + INF fits in long long
     LiChaoTree(ll _mi, ll _ma) : minX(_mi), maxX(_ma) {
         rootMin = new Node(minX, maxX, Line(0, INF));
         rootMax = new Node(minX, maxX, Line(0, INF));
@@ -74,17 +75,10 @@ struct LiChaoTree {
 
     void addLine(const Line& newLine) {
         rootMin->update(newLine);
-
-        Line newLineMax(newLine);
-        newLineMax.a *= -1; newLineMax.b *= -1;
-        rootMax->update(newLineMax);
     }
 
     ll getMin(ll x) const {
         return rootMin->getMin(x);
-    }
-    ll getMax(ll x) const {
-        return -rootMax->getMin(x);
     }
 };
 
@@ -92,5 +86,17 @@ int main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
- 
+    int n; cin >> n;
+    vector<ll> a(n); for (auto& x : a) { cin >> x; }
+    vector<ll> b(n); for (auto& x : b) { cin >> x; }
+
+    vector<ll> dp(n, INF); dp[0] = b[0];
+    LiChaoTree LCT(0, 1e10);
+    LCT.addLine(Line(b[0], dp[0]));
+    for (int r = 1; r < n; r++) {
+        dp[r] = b[r] + LCT.getMin(a[r] - 1);
+        LCT.addLine(Line(b[r], dp[r]));
+    }
+
+    cout << dp[n - 1] << '\n';
 }

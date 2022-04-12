@@ -60,6 +60,7 @@ struct ConvexHull {
 
 // Given a set of points (Ai,Bi) and a point (x,y), finds min/max(Ai.x+Bi.y)
 // Addition of points takes O(n logn) overall amortized time; a query takes O(log^2n) time
+// maxCoord^2 should fit in long long
 struct ConvexHullTrickDynamic {
 	int numPoints = 0;
 	vector<ConvexHull> hulls;
