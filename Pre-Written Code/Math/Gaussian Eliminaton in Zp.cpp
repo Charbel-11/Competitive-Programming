@@ -24,7 +24,8 @@ pair<int, ll> GaussianElimination(vector<vector<ll>> &a, bool augmented = false)
 	int n = a.size(), m = a[0].size(), rank = 0;
 	ll det = 1;
 	
-	for (int col=0; col<m-augmented; col++) {
+	for (int col = 0; col < m - augmented; col++) {
+		if (rank == n) { det = 0; break; }
 		int pivot = -1;
 		for (int i = rank; i < n; i++) {
 			if (a[i][col] > 0) {
@@ -33,21 +34,21 @@ pair<int, ll> GaussianElimination(vector<vector<ll>> &a, bool augmented = false)
 			}
 		}
 		if (pivot == -1) { det = 0; continue; }
-		
+
 		if (rank != pivot) {
-			det = mod-det;
+			det = mod - det;
 			swap(a[rank], a[pivot]);
 		}
 		det *= a[rank][col]; det %= mod;
-		
+
 		if (augmented && a[rank][col] != 1) {
 			ll inv = modinv(a[rank][col]);
-			for(int j = col; j < m; j++){
+			for (int j = col; j < m; j++) {
 				a[rank][j] *= inv;
 				a[rank][j] %= mod;
 			}
 		}
-		
+
 		for (int i = (augmented ? 0 : rank + 1); i < n; i++) {
 			if (i == rank) { continue; }
 			if (a[i][col] != 0) {

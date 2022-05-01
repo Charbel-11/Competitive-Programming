@@ -13,25 +13,26 @@ pair<int, double> GaussianElimination(vector<vector<double>> &a, bool augmented 
 	int n = a.size(), m = a[0].size(), rank = 0;
 	double det = 1;
 	
-	for (int col=0; col<m-augmented; col++) {
+	for (int col = 0; col < m - augmented; col++) {
+		if (rank == n) { det = 0; break; }
 		int pivot = rank;
-		for (int i = rank+1; i < n; i++) {
+		for (int i = rank + 1; i < n; i++) {
 			if (abs(a[i][col]) > abs(a[pivot][col]))
 				pivot = i;
 		}
 		if (abs(a[pivot][col]) < EPS) { det = 0; continue; }
-		
+
 		if (rank != pivot) {
 			det = -det;
 			swap(a[rank], a[pivot]);
 		}
 		det *= a[rank][col];
-		
+
 		if (augmented && a[rank][col] != 1) {
-			double c = 1/a[rank][col];
-			for(int j = col; j < m; j++){ a[rank][j] *= c; }
+			double c = 1 / a[rank][col];
+			for (int j = col; j < m; j++) { a[rank][j] *= c; }
 		}
-		
+
 		for (int i = (augmented ? 0 : rank + 1); i < n; i++) {
 			if (i == rank) { continue; }
 			if (abs(a[i][col]) > EPS) {
