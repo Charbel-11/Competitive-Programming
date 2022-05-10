@@ -6,8 +6,7 @@ using namespace std;
 typedef long long ll;
 
 struct FT {
-	int n;
-	vector<ll> vals;
+	int n; vector<ll> vals;
 	FT(const int n) : n(n), vals(vector<ll>(n + 1, 0)) { }
 
 	//Adds x
@@ -31,5 +30,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
 
-	return 0;
 }
