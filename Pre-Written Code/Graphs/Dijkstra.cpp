@@ -58,5 +58,4 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr), cout.tie(nullptr);
 
-	cin.ignore(2); return 0;
 }
