@@ -16,26 +16,26 @@ struct graph {
 	vector<node> nodes; int n;
 	graph(int _n) : n(_n) { nodes.resize(n); }
 
-	void add_edge(int u, int v) {
+	void addEdge(int u, int v) {
 		edge e1(u, v); nodes[u].edges.push_back(e1);
 	}
 
-	bool cycle_dfs(int u, vector<int> &color, vector<int> &parent) {
+	bool cycleDFS(int u, vector<int> &color, vector<int> &parent) {
 		color[u] = 1;
 		for (auto &e : nodes[u].edges) {
 			int v = e.v;
 			if (color[v] == 0) {
 				parent[v] = u;
-				if (cycle_dfs(v, color, parent)) { return true; }
+				if (cycleDFS(v, color, parent)) { return true; }
 			}
 			else if (color[v] == 1) { parent[v] = u; return true; }	//One node in the cycle would be u or v
 		}
 		color[u] = 2; return false;
 	}
-	bool find_cycle() {
+	bool hasCycle() {
 		vector<int> color(n, 0), parent(n, -1);
 		for (int v = 0; v < n; v++)
-			if (cycle_dfs(v, color, parent)) { return true; }
+			if (cycleDFS(v, color, parent)) { return true; }
 		return false;
 	}
 
@@ -47,7 +47,7 @@ struct graph {
 		}
 		ans.push_back(u);
 	}
-	vector<int> topological_sort() {
+	vector<int> topologicalSort() {
 		vector<int> visited(n, false), ans;
 		for (int i = 0; i < n; ++i)
 			if (!visited[i]) { dfs(i, visited, ans); }
@@ -87,8 +87,7 @@ struct graph {
 };
 
 int main() {
-	ios::sync_with_stdio(false);
-	cin.tie(nullptr), cout.tie(nullptr);
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
 
-	cin.ignore(2); return 0;
 }
