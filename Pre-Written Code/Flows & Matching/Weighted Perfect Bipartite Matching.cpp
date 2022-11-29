@@ -7,10 +7,7 @@ In practice, it solves 1000x1000 problems in around 1 second.
 The values in cost[i][j] may be positive or negative.
 To perform maximization, simply negate the cost[][] matrix.
 */
-#include <algorithm>
-#include <cmath>
-#include <vector>
-#include <iostream>
+#include <bits/stdc++.h>
 typedef long long ll;
 using namespace std;
 

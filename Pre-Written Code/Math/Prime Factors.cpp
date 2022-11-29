@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -13,12 +9,12 @@ vector<ll> primeFactors(ll x) {
 	while (x != 1 && num*num <= x) {
 		if (x % num == 0) {
 			ans.push_back(num);
-			while (x % num == 0) x /= num;
+			while (x % num == 0) { x /= num; }
 		}
 		num++;
 	}
 	if (x != 1) { ans.push_back(x); }
-	return move(ans);
+	return ans;
 }
 
 
@@ -37,7 +33,7 @@ vector<pair<ll, int>> primeFactors(ll x) {
 		num++;
 	}
 	if (x != 1) { ans.push_back({ x,1 }); }
-	return move(ans);
+	return ans;
 }
 
 //To get these results for ALL numbers < n, check sieve

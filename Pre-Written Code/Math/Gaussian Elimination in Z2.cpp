@@ -1,6 +1,4 @@
-#include <vector>
-#include <bitset>
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
 
 const int N = 100;  // Change accordingly; equal to max num variables + 1

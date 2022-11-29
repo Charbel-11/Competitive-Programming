@@ -1,9 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include <iomanip>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 typedef long double ld;
@@ -80,5 +75,5 @@ vector<Point> CircleLineIntersection(Point a, Point b, const Circle& c) {	//not 
 	vector<Point> ans = { c.O + a + b * (-B + sqrt(D + eps)) / A };
 	if (D > eps) { ans.push_back(c.O + a + b * (-B - sqrt(D)) / A); }
 
-	return move(ans);
+	return ans;
 }

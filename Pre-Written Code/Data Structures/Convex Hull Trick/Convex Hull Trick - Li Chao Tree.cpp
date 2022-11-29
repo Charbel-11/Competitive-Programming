@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -18,7 +16,7 @@ struct Line {
 
 struct Node {
     ll l, r; Line f;
-    Node* left, * right;
+    Node* left, *right;
 
     Node(ll l, ll r, const Line& _f) : l(l), r(r), f(_f), left(NULL), right(NULL) {}
 

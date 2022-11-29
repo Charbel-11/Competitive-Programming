@@ -1,7 +1,4 @@
-#include <iostream>
-#include <set>
-#include <vector>
-#include <numeric>
+#include <bits/stdc++.h>
 using namespace std;
 
 //We store the elements of each component in children[compRoot]

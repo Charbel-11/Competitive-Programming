@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -34,7 +32,7 @@ vector<Point> convexHullGrahamScan(vector<Point> P) {
 	P.erase(unique(P.begin(), P.end()), P.end());
 
 	int n = (int)P.size();
-	if (n < 3) { return move(P); }
+	if (n < 3) { return P; }
 
 	vector<Point> res;
 	auto incorrect = [&](const Point& A, const Point& B, const Point& C) {
@@ -55,7 +53,7 @@ vector<Point> convexHullGrahamScan(vector<Point> P) {
 	}
 
 	res.pop_back();
-	return move(res);
+	return res;
 }
 
 int main() {

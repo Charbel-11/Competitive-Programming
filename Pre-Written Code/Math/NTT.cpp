@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -95,5 +93,5 @@ vector<ll> polyModMult(vector<ll>& a, vector<ll>& b) {
 	for (auto& x : A) { x = (x * invN) % mod; }
 
 	while (A.size() > N + M - 1) { A.pop_back(); }
-	return move(A);
+	return A;
 }

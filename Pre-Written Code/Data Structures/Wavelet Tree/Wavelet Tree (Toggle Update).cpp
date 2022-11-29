@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <numeric>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -81,11 +78,14 @@ struct WaveletTree {
 			if (rVal == lVal) { return activeLeaf(r) - activeLeaf(l - 1); }
 			return activeLeft(r) + activeRight(r) - activeLeft(l - 1) - activeRight(l - 1);
 		}
+
 		int befL = (l ? left[l - 1] : 0);
 		return lC->LessThanK(befL, left[r] - 1, k) + rC->LessThanK(l - befL, r - left[r], k);
 	}
 	//EXTRA: x <= #numbers <= y in [l, r]  (l, r in compressed form)
-	int inRange(int l, int r, int x, int y) { return LessThanK(l, r, y) - LessThanK(l, r, x - 1); }
+	int inRange(int l, int r, int x, int y) {
+        return LessThanK(l, r, y) - LessThanK(l, r, x - 1);
+    }
 
 	//Query #3: #numbers = k in [l, r] (k in compressed form)
 	int countK(int l, int r, int k) {
@@ -101,9 +101,12 @@ struct WaveletTree {
 	void toggle(int i) { if (i >= 0 && i < n) return toggle(i, B[i]); }
 	void toggle(int i, const int &x) {
 		if (lVal == rVal) { return aLeaf.update(i, aLeaf.query(i, i) ? -1 : 1); }
-		int mid = (lVal + rVal) >> 1; FT &ft = x <= mid ? aLeft : aRight;
+
+        int mid = (lVal + rVal) >> 1;
+        FT &ft = x <= mid ? aLeft : aRight;
 		ft.update(i, ft.query(i, i) ? -1 : 1);
-		if (x > mid) { return rC->toggle(mapRight(i), x); }
+
+        if (x > mid) { return rC->toggle(mapRight(i), x); }
 		return lC->toggle(mapLeft(i), x);
 	}
 };
@@ -112,5 +115,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
 
-	cin.ignore(2); return 0;
 }

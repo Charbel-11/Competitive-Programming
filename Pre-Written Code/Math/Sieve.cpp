@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 //Generate the prime numbers < n
@@ -75,5 +71,5 @@ vector<int> numDivisors(int n) {
 		for (int j = i; j <= n; j += i)
 			res[j]++;
 
-	return move(res);
+	return res;
 }

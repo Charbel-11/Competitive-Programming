@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const ll mod;
@@ -19,7 +17,7 @@ struct Matrix {
 		for (int i = 0; i < n; i++)
 			for (int j = 0; j < m; j++)
 				res[i][j] = (v[i][j] + rhs[i][j]) % mod;
-		return move(res);
+		return res;
 	}
 	Matrix operator *(Matrix &rhs) {
 		Matrix res(n, rhs.m, 0);
@@ -27,13 +25,13 @@ struct Matrix {
 			for (int j = 0; j < rhs.m; j++)
 				for (int k = 0; k < m; k++)
 					res[i][j] = (res[i][j] + v[i][k] * rhs[k][j]) % mod;
-		return move(res);
+		return res;
 	}
 	Matrix operator ^(ll x) {
 		Matrix res(n), a(v); //Change if (*) changes
 		for (; x; x >>= 1, a = a * a)
 			if (x & 1) { res = res * a; }
-		return move(res);
+		return res;
 	}
 };
 
@@ -41,5 +39,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
 
-	cin.ignore(2); return 0;
 }

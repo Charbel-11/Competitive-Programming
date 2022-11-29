@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -41,16 +40,20 @@ ll eulerPhi(ll n) {
 
 int divisorCount(ll n) {
 	if (n == 1) { return 1; }
+
 	int res = 2; ll i = 2;
-	for (i = 2; i * i < n; i++)
-		if (n % i == 0) { res += 2; }
+	for (; i * i < n; i++) {
+        if (n % i == 0) { res += 2; }
+    }
 	if (i * i == n) { res++; }
+
 	return res;
 }
 
 ll power(ll x, ll p) {
 	ll res = 1; x %= mod;
-	for (; p; p >>= 1, x = (x * x) % mod)
-		if (p & 1) res = (res * x) % mod;
+	for (; p; p >>= 1, x = (x * x) % mod) {
+        if (p & 1) { res = (res * x) % mod; }
+    }
 	return res;
 }

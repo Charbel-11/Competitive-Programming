@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -16,12 +15,12 @@ struct graph {
 	graph(int _n) : n(_n) { nodes[0].resize(n); nodes[1].resize(n); }
 
 	//Add the close bu(u) OR bv(v)
-	void add_edge(int u, int v, bool bu, bool bv) {
+	void addEdge(int u, int v, bool bu, bool bv) {
 		int pu = u << 1 | !bu, pv = v << 1 | !bv;
 		int nu = u << 1 | bu, nv = v << 1 | bv;
-		add_edge(nu, pv); add_edge(nv, pu);
+		addEdge(nu, pv); addEdge(nv, pu);
 	}
-	void add_edge(int u, int v) {
+	void addEdge(int u, int v) {
 		nodes[0][u].edges.emplace_back(u, v);
 		nodes[1][v].edges.emplace_back(v, u);
 	}
@@ -55,18 +54,18 @@ struct graph {
 				component.clear(); t++;
 			}
 		}
-		return move(scc);
+		return scc;
 	}
 
 	//Returns a valid assignment or an empty vector if it is not satisfiable 
-	vector<int> TWOSAT() {
+	vector<int> TwoSAT() {
 		int t = 0; vector<int> scc = SCC(t);
 		vector<int> res(n >> 1);
 		for (int i = 0; i < n; i += 2) {
 			if (scc[i] == scc[i + 1]) { return vector<int>(); }
 			res[i >> 1] = scc[i] > scc[i + 1];
 		}
-		return move(res);
+		return res;
 	}
 };
 
@@ -74,5 +73,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0); cout.tie(0);
 
-	cin.ignore(2); return 0;
 }

@@ -1,9 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-#include <iomanip>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const double pi = 3.14159265358979323846;

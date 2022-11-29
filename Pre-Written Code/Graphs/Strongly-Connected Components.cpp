@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -22,24 +21,27 @@ struct graph {
 
 	void scc_dfs1(int v, vector<bool> &used, vector<int> &order) {
 		used[v] = true;
-		for (auto &x : nodes[0][v].edges)
-			if (!used[x.v]) { scc_dfs1(x.v, used, order); }
+		for (auto &x : nodes[0][v].edges) {
+            if (!used[x.v]) { scc_dfs1(x.v, used, order); }
+        }
 		order.push_back(v);
 	}
 
 	void scc_dfs2(int v, vector<bool> &used, vector<int> &component) {
 		used[v] = true;
 		component.push_back(v);
-		for (auto &x : nodes[1][v].edges)
-			if (!used[x.v]) { scc_dfs2(x.v, used, component); }
+		for (auto &x : nodes[1][v].edges) {
+            if (!used[x.v]) { scc_dfs2(x.v, used, component); }
+        }
 	}
 
 	//Returns a labeling of vertices such that u and v have the same label iff they are strongly connected
 	vector<int> SCC(int &t) {
 		vector<bool> used(n, false);
 		vector<int> order, component, scc(n);
-		for (int i = 0; i < n; i++)
-			if (!used[i]) { scc_dfs1(i, used, order); }
+		for (int i = 0; i < n; i++) {
+            if (!used[i]) { scc_dfs1(i, used, order); }
+        }
 		used.assign(n, false);
 		for (int i = 0; i < n; i++) {
 			int v = order[n - 1 - i];
@@ -49,7 +51,7 @@ struct graph {
 				component.clear(); t++;
 			}
 		}
-		return move(scc);
+		return scc;
 	}
 };
 
@@ -57,5 +59,4 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr), cout.tie(nullptr);
 
-	cin.ignore(2); return 0;
 }

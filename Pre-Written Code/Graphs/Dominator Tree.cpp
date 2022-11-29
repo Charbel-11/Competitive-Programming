@@ -1,11 +1,4 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <vector>
-#include <numeric>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -70,7 +63,7 @@ struct graph {
 		}
 
 		n = initialN;
-		return move(T);
+		return T;
 	}
 
 private:

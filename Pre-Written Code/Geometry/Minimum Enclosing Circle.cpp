@@ -1,9 +1,4 @@
-#include <algorithm> 
-#include <assert.h> 
-#include <iostream> 
-#include <cmath> 
-#include <vector> 
-#include <iomanip>
+#include <bits/stdc++.h>
 using namespace std;
 typedef double ld;
 

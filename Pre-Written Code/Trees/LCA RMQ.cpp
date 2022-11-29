@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <numeric>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -91,5 +88,4 @@ int main() {
 		cout << lca.dist(--u, --v) << endl;
 	}
 
-	cin.ignore(2); return 0;
 }

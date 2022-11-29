@@ -1,5 +1,4 @@
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -102,7 +101,7 @@ struct SegTree {
 		vector<StVal> res(n);
 		for (int i = 0; i < n; ++i)
 			res[i] = st[leaves[i]];
-		return move(res);
+		return res;
 	}
 };
 
@@ -140,5 +139,4 @@ int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
 
-	cin.ignore(2); return 0;
 }

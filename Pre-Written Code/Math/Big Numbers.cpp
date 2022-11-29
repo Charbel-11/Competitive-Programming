@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 //assumes a>b
@@ -22,7 +18,7 @@ string subtract(string a, string b) {
 	}
 	while (res.back() == '0') { res.pop_back(); }
 	reverse(res.begin(), res.end());
-	return move(res);
+	return res;
 }
 
 string add(string a, string b) {
@@ -42,7 +38,7 @@ string add(string a, string b) {
 	while (!res.empty() && res.back() == '0') { res.pop_back(); }
 	reverse(res.begin(), res.end());
 	if (res.empty()) { res = "0"; }
-	return move(res);
+	return res;
 }
 
 bool compareStrings(const string &a, const string &b) {

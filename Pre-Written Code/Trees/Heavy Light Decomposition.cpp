@@ -1,12 +1,5 @@
 //Handle point update (either node or edge) and path queries in O(log^2n)
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <stack>
-#include <string>
-#include <algorithm>
-#include <queue>
-#include <climits>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 vector<int> base;

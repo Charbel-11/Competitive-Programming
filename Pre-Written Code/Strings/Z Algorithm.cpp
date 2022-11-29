@@ -1,16 +1,10 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
 //Returns the array Z where Z[i] = length of max substring starting at i equal to a prefix (for i > 0)
 //O(n)
-vector<int> ZAlgo(string& s) {
+vector<int> ZAlgo(const string& s) {
     int n = s.size();
     vector<int> z(n, 0);
     int L = 0, R = 0;
@@ -28,5 +22,5 @@ vector<int> ZAlgo(string& s) {
             z[i] = R - L; R--;
         }
     }
-    return move(z);
+    return z;
 }

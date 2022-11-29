@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <set>
-#include <queue>
-#include <stack>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -55,7 +50,7 @@ struct graph {
 		}
 		if (count(used.begin(), used.end(), false)) { return vector<int>(); }	//Not all edges were reachable
 		//reverse(res.begin(), res.end());			//Reverse if we want to make sure the path starts at start (for cycles doesn't matter)
-		return move(res);
+		return res;
 	}
 };
 
@@ -63,5 +58,4 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr), cout.tie(nullptr);
 
-	cin.ignore(2); return 0;
 }

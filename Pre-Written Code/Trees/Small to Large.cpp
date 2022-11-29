@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <set>
-
+#include <bits/stdc++.h>
 using namespace std;
 vector<int> c, res;
 

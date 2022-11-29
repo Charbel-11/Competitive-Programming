@@ -30,7 +30,7 @@ struct graph {
 
 	void dijkstra_sp(int s, vector<int> &parent) {
 		vector<bool> visited(n, false);
-		priority_queue <pair<ll, int>, vector<pair<ll, int>>, greater<pair<ll, int>>> pq;
+		priority_queue <pair<ll, int>, vector<pair<ll, int>>, greater<>> pq;
 		dist[s] = 0ll; pq.push({ 0, s });
 
 		while(!pq.empty()) {
@@ -50,7 +50,7 @@ struct graph {
 		stack<int> S; S.push(d); int cur = d;
 		while (parent[cur] != -1) { cur = parent[cur]; S.push(cur); }
 		while (!S.empty()) { cout << S.top() << ' '; S.pop(); }
-		cout << endl;
+		cout << '\n';
 	}
 };
 

@@ -1,6 +1,4 @@
-#include <string>
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
 //For each i in the returned vector, the number represents the length of 
@@ -14,7 +12,7 @@ vector<int> prefixFunction(string& s) {
 		if (s[j] == s[i]) { j++; }
 		pf[i] = j;
 	}
-	return move(pf);
+	return pf;
 }
 
 //checks if s is in t

@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <queue>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const ll INF = 1ll << 40;  //Should be larger than max capacity
@@ -100,7 +97,7 @@ struct graph {
 				ans.push_back(edges[i]);
 			}
 		}
-		return move(ans);
+		return ans;
 	}
 };
 

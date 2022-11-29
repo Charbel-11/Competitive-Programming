@@ -1,9 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <map>
-#include <unordered_map>
-
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 

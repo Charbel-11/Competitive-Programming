@@ -1,10 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
-#include <algorithm>
-#include <queue>
-#include <string>
-#include <climits>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {

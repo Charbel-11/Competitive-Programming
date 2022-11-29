@@ -1,12 +1,4 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <complex>
-#include <cstring>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -41,7 +33,7 @@ vector<ll> xorMultiply(const vector<ll>& a, const vector<ll>& b) {
     for (int i = 0; i < n; i++) { fa[i] *= fb[i]; }
     FWHT(fa, true);
 
-    return move(fa);
+    return fa;
 }
 
 
@@ -79,7 +71,7 @@ vector<ll> andMultiply(const vector<ll>& a, const vector<ll>& b) {
     for (int i = 0; i < n; i++) { fa[i] *= fb[i]; }
     andTransform(fa, true);
 
-    return move(fa);
+    return fa;
 }
 
 
@@ -117,5 +109,5 @@ vector<ll> orMultiply(const vector<ll>& a, const vector<ll>& b) {
     for (int i = 0; i < n; i++) { fa[i] *= fb[i]; }
     orTransform(fa, true);
 
-    return move(fa);
+    return fa;
 }

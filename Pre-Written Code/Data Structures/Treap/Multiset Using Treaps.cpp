@@ -1,8 +1,6 @@
 //Treap implementation of multiset
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct node {
@@ -91,5 +89,5 @@ void dfs(node* cur, vector<int>& res) {
 vector<int> getAllValues(node* root) {
 	vector<int> res;
 	dfs(root, res);
-	return move(res);
+	return res;
 }

@@ -1,9 +1,4 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <cmath>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
 const int K = 26;	//size of the alphabet
 

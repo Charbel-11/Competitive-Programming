@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <set>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -39,7 +37,7 @@ struct graph {
 		for (int i = 0; i < n; i++) { color[i] = 0; }
 		graphColoringUtil(m, color, 0);
 		for (int i = 0; i < n; i++)
-			cout << i + 1 << ' ' << color[i] << endl;
+			cout << i + 1 << ' ' << color[i] << '\n';
 	}
 };
 
@@ -47,5 +45,4 @@ int main() {
 	ios::sync_with_stdio(false);
 	cin.tie(nullptr), cout.tie(nullptr);
 
-	cin.ignore(2); return 0;
 }

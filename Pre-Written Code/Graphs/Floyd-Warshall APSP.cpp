@@ -1,6 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -41,13 +39,16 @@ struct graph {
 			for (auto &y : x.edges)
 				D[y.u][y.v] = min(D[y.u][y.v], y.w);
 
-		for (int k = 0; k < n; k++)
-			for (int i = 0; i < n; i++)
-				for (int j = 0; j < n; j++)
-					if (D[i][k] + D[k][j] < D[i][j]) {
-						D[i][j] = D[i][k] + D[k][j];
-						helper[i][j] = k;
-					}
+		for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (D[i][k] + D[k][j] < D[i][j]) {
+                        D[i][j] = D[i][k] + D[k][j];
+                        helper[i][j] = k;
+                    }
+                }
+            }
+        }
 	}
 
 	void APSP_printPath(int s, int d) {

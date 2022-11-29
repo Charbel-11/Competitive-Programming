@@ -1,10 +1,4 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -61,7 +55,7 @@ struct DynamicHash {
 			res[i] = DynamicHash(res[i - 1]);
 			res[i].add(word[i - 1]);
 		}
-		return move(res);
+		return res;
 	}
 
 	//l, r 0-indexed

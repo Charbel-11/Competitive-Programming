@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <set>
-#include <queue>
-#include <stack>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -104,7 +99,7 @@ struct graph {
 			curG.resizeVectors();
 			forest.emplace_back(curG);
 		}
-		return move(forest);
+		return forest;
 	}
 };
 

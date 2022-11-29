@@ -7,9 +7,7 @@
 //O(nlogn) if we remove queries of type 3
 //O(nlog^2n) amortized in total
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const ll INF = 1e15;	//Change if needed
@@ -84,7 +82,7 @@ struct StVal {
 		else if (type == SET) {
 			max1 = val;	max2 = -INF; freqMax = len;
 			min1 = val; min2 = INF; freqMin = len;
-			lazyAdd = 0; lazySet = INF;
+			lazyAdd = 0; lazySet = val;
 			sum = val * len;
 		}
 	}

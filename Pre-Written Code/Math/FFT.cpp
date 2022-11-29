@@ -1,12 +1,4 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <complex>
-#include <cstring>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 using cd = complex<double>;
@@ -55,5 +47,5 @@ vector<ll> multiply(const vector<ll>& a, const vector<ll>& b) {
 
     vector<ll> result(s);
     for (int i = 0; i < s; i++) { result[i] = round(fa[i].real()); }
-    return move(result);
+    return result;
 }

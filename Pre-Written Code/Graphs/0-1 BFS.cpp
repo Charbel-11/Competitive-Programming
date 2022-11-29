@@ -1,11 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <deque>
-#include <string>
-#include <algorithm>
-#include <stdio.h>
-#include <string.h>
-
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const int INF = 1 << 30;
@@ -49,7 +42,7 @@ struct graph {
 			}
 		}
 
-		return move(dist);
+		return dist;
 	}
 };
 

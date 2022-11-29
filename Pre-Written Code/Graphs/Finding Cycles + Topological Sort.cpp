@@ -1,7 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <queue>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct edge {
@@ -52,7 +49,7 @@ struct graph {
 		for (int i = 0; i < n; ++i)
 			if (!visited[i]) { dfs(i, visited, ans); }
 		reverse(ans.begin(), ans.end());
-		return move(ans);
+		return ans;
 	}
 
 	//Returns the lexicographically smallest top sort (need the in-degree of each node)
@@ -69,7 +66,7 @@ struct graph {
 				if (nodes[e.v].inD == 0) { Q.push(e.v); }
 			}
 		}
-		return move(ans);
+		return ans;
 	}
 
 	//Call topSort before or call it in the function and remove the parameter

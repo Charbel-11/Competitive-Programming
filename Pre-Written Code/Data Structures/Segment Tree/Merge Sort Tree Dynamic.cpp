@@ -2,9 +2,7 @@
 //O(nlog^2n) time to preprocess with O(nlogn) space
 //O(log^2n) time per query
 
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -95,7 +93,7 @@ void dfs(node *cur, vector<int> &res) {
 vector<int> getAllValues(node *root) {
 	vector<int> res;
 	dfs(root, res);
-	return move(res);
+	return res;
 }
 #pragma endregion
 

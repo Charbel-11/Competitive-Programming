@@ -1,7 +1,4 @@
-#include <iostream>
-#include <set>
-#include <vector>
-#include <numeric>
+#include <bits/stdc++.h>
 using namespace std;
 
 //Maintains the parity of the distance of each node to its root 

@@ -1,11 +1,4 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <cstring>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -28,5 +21,5 @@ vector<int> manacher(string& s, bool even) {
 			r = i + k - even;
 		}
 	}
-	return move(res);
+	return res;
 }

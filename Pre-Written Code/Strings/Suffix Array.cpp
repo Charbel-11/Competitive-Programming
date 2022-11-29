@@ -1,11 +1,4 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <cstring>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -94,6 +87,7 @@ bool isSubstr(string& s, string& t, vector<int>& sufA) {
 	return false;
 }
 
+//sufA is the suffix array of s only
 //Counts how many times t appears as a substring of s in O(|t|log|s|)
 int countSubstr(string& s, string& t, vector<int>& sufA) {
 	int firstOcc = -1, lastOcc = -2;
