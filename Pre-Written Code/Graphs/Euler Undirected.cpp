@@ -1,29 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-struct edge {
-	int u, v; edge() {}
-	edge(int _u, int _v) :
+struct Edge {
+	int u, v; Edge() {}
+	Edge(int _u, int _v) :
 		u(_u), v(_v) {}
 };
 
-struct node { vector<int> edges; };
+struct Node { vector<int> edges; };
 
 //Goes over all edges, not necessarily all vertices
-struct graph {
-	vector<edge> edges;
-	vector<node> nodes;
+struct Graph {
+	vector<Edge> edges;
+	vector<Node> nodes;
 	int n, m;
-	graph(int _n) : n(_n), m(0) { nodes.resize(n); }
+	Graph(int _n) : n(_n), m(0) { nodes.resize(n); }
 
 	void add_edge(int u, int v) {
 		nodes[u].edges.push_back(m);
 		nodes[v].edges.push_back(m);
-		edges.push_back(edge(u,v)); m++;
+		edges.push_back(Edge(u,v)); m++;
 	}
 
-	//Start can be any node; if it has to be 0 we should hard code it
-	//Since node 0 could have 0 edges and start becomes 1 for ex
+	//Start can be any Node; if it has to be 0 we should hard code it
+	//Since Node 0 could have 0 edges and start becomes 1 for ex
 	vector<int> euler_undirected() {
 		int start = -1, odd_deg = 0;
 		for (int i = 0; i < n; ++i) {
@@ -34,7 +34,7 @@ struct graph {
 		//if (odd_deg > 0) { return vector<int>(); } //Euler tour/cycle not possible
 		if (odd_deg > 2) { return vector<int>(); }	//Euler path not possible
 		vector<bool> used(m, 0);
-		vector<int> stack, res, which(n + 1, 0);		//which[v] = index of the edge with endpoint v to check next
+		vector<int> stack, res, which(n + 1, 0);		//which[v] = index of the Edge with endpoint v to check next
 		stack.push_back(start);
 		while (!stack.empty()) {
 			int v = stack.back();

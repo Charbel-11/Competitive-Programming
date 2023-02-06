@@ -3,22 +3,22 @@ using namespace std;
 typedef long long ll;
 
 const ll INF = 1e17;
-struct edge {
-	int u, v; edge() {}
-	edge(int _u, int _v) :
+struct Edge {
+	int u, v; Edge() {}
+	Edge(int _u, int _v) :
 		u(_u), v(_v) {}
 };
 
-struct node { vector<edge> edges; };
+struct Node { vector<Edge> edges; };
 
-struct tree {
-	vector<node> nodes;
+struct Tree {
+	vector<Node> nodes;
 	int root, n;
 
-	tree(int _n, int _r = 0) : n(_n), root(_r) { nodes.resize(n); }
+	Tree(int _n, int _r = 0) : n(_n), root(_r) { nodes.resize(n); }
 
-	void add_edge(int u, int v) {
-		edge e1(u, v); edge e2(v, u);
+	void addEdge(int u, int v) {
+		Edge e1(u, v); Edge e2(v, u);
 		nodes[u].edges.push_back(e1);
 		nodes[v].edges.push_back(e2);
 	}
@@ -33,6 +33,7 @@ struct tree {
 
 	//To find all possible endpoints of the diameter, after storing all d2s such that dist2[d2] = diameter in the set of endpoints,
 	//we need another dfs from any d2 (vector dist(n, -1) where dist[d2] = 0 and dfs(d2, -1, dist)) and add all i such that dist[i] = diameter
+    //The idea is all such endpoints will be at the same distance from any such d2 so using just one is enough
 	void findDiameter(int &diameter, int &d1, int &d2) {
 		diameter = 0; d1 = d2 = root;
 		vector<int> dist(n, -1);
@@ -48,7 +49,7 @@ struct tree {
 		}
 	}
 
-	//OR find diameter, root the tree on an endpoint, starting from the second endpoint
+	//OR find diameter, root the Tree on an endpoint, starting from the second endpoint
 	//go up d/2, we get to the center (if d is odd, the next parent is the next center)
 	void findCenters(int &c1, int &c2) {
 		vector<int> leaves[2], cnt(n, 0);
@@ -80,7 +81,7 @@ struct tree {
 
 	//----------------------------------------------------------------------------------------------------------//
 
-	//Finds all diameters and centers (if 2 centers exist it takes any 1) of each tree in a forest
+	//Finds all diameters and centers (if 2 centers exist it takes any 1) of each Tree in a forest
 	vector<pair<int, int>> findDiametersAndCenters() {
 		vector<pair<int, int>> ans;
 		vector<bool> vis1(n, 0), vis2(n, 0);
@@ -117,7 +118,7 @@ struct tree {
 		d2 = p.first; diameter = p.second;
 	}
 	//Can be modified to return both centers if the diameter is odd
-	//u should be the endpoint of the diameter which is not the root (so, the tree should be rooted at the other endpoint)
+	//u should be the endpoint of the diameter which is not the root (so, the Tree should be rooted at the other endpoint)
 	//if above function is used, use u = d2
 	int findCenter(int u, int diameter, vector<int> &parent) {
 		diameter >>= 1;
@@ -131,9 +132,9 @@ int main() {
 	cin.tie(0), cout.tie(0);
 
 	int n; cin >> n;
-	tree t(n);
+	Tree t(n);
 	for (int i = 0; i < n - 1; i++) {
 		int u, v; cin >> u >> v; u--; v--;
-		t.add_edge(u, v);
+		t.addEdge(u, v);
 	}
 }

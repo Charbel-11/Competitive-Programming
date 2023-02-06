@@ -1,26 +1,23 @@
-#include <iostream>
-#include <vector>
-#include <stack>
 #include <bits/stdc++.h>
 using namespace std;
 
-struct edge {
-	int u, v; int w; edge() {}
-	edge(int _u, int _v, int _w = 1) :
+struct Edge {
+	int u, v; int w; Edge() {}
+	Edge(int _u, int _v, int _w = 1) :
 		u(_u), v(_v), w(_w) {}
 };
 
-struct node { vector<edge> edges; };
+struct Node { vector<Edge> edges; };
 
-struct graph {
-	vector<node> nodes;
+struct Graph {
+	vector<Node> nodes;
 	int n;
 
-	graph(int _n) : n(_n) { nodes.resize(n); }
+	Graph(int _n) : n(_n) { nodes.resize(n); }
 
-	void add_edge(int u, int v) {
-		edge e1(u, v); nodes[u].edges.push_back(e1);
-		edge e2(v, u); nodes[v].edges.push_back(e2);
+	void addEdge(int u, int v) {
+		Edge e1(u, v); nodes[u].edges.push_back(e1);
+		Edge e2(v, u); nodes[v].edges.push_back(e2);
 	}
 };
 
@@ -29,9 +26,9 @@ int main() {
 	cin.tie(0), cout.tie(0);
 
 	int n, m; cin >> n >> m;
-	graph g(n);
+	Graph g(n);
 	for (int i = 0; i < m; i++) {
 		int u, v; cin >> u >> v; u--; v--;
-		g.add_edge(u, v);
+		g.addEdge(u, v);
 	}
 }

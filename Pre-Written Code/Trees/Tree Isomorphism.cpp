@@ -36,8 +36,10 @@ struct Tree {
 
 		while (!Q.empty()) {
 			int cur = Q.front(); Q.pop();
-			last = cur; for (auto& e : nodes[cur])
+			last = cur;
+            for (auto& e : nodes[cur]){
 				if (par[e] == -1) { par[e] = cur; Q.push(e); }
+            }
 		}
 
 		if (!getPath) return { last };
@@ -53,30 +55,37 @@ struct Tree {
 	}
 
 	static bool compareNames(const vector<int>& A, const vector<int>& B) {
-		if (A.size() != B.size()) return A.size() < B.size();
-		for (int i = 0; i < (int)A.size(); i++)
-			if (A[i] != B[i]) return A[i] < B[i];
+		if (A.size() != B.size()) { return A.size() < B.size(); }
+		for (int i = 0; i < (int)A.size(); i++) {
+            if (A[i] != B[i]) { return A[i] < B[i]; }
+        }
 		return false;
 	}
 
 	static bool eqNames(vector<int>& A, vector<int>& B) {
-		if (A.size() != B.size()) return false;
-		for (int i = 0; i < (int)A.size(); i++)
-			if (A[i] != B[i]) return false;
+		if (A.size() != B.size()){ return false; }
+		for (int i = 0; i < (int)A.size(); i++) {
+            if (A[i] != B[i]) { return false; }
+        }
 		return true;
 	}
 
 	bool processLevel(Tree& rhs, vector<int>& curL, vector<int>& rhsL, vector<int>& curCannonicalNames, vector<int>& rhsCannonicalNames) {
-		int M = (int)curL.size(); if (M != (int)rhsL.size()) return false;
-		vector<vector<int>> curName(M), rhsName(M), comp;
+		int M = (int)curL.size();
+        if (M != (int)rhsL.size()) { return false; }
 
+		vector<vector<int>> curName(M), rhsName(M), comp;
 		for (int i = 0; i < M; i++) {
-			for (auto& e : nodes[curL[i]]) if (curCannonicalNames[e] != -1)
-				curName[i].push_back(curCannonicalNames[e]);
+			for (auto& e : nodes[curL[i]]) {
+                if (curCannonicalNames[e] != -1)
+                    curName[i].push_back(curCannonicalNames[e]);
+            }
 			sort(curName[i].begin(), curName[i].end());
 
-			for (auto& e : rhs.nodes[rhsL[i]]) if (rhsCannonicalNames[e] != -2)
-				rhsName[i].push_back(rhsCannonicalNames[e]);
+			for (auto& e : rhs.nodes[rhsL[i]]) {
+                if (rhsCannonicalNames[e] != -2)
+                    rhsName[i].push_back(rhsCannonicalNames[e]);
+            }
 			sort(rhsName[i].begin(), rhsName[i].end());
 
 			comp.emplace_back(curName[i]);
@@ -104,7 +113,8 @@ struct Tree {
 		int L = (int)curLevels.size();
 		vector<int> curCannonicalNames(n, -1), rhsCannonicalNames(n, -2);
 
-		bool ok = true; for (int i = L - 1; i >= 0 && ok; i--)
+		bool ok = true;
+        for (int i = L - 1; i >= 0 && ok; i--)
 			ok = ok && processLevel(rhs, curLevels[i], rhsLevels[i], curCannonicalNames, rhsCannonicalNames);
 
 		return ok && (curCannonicalNames[root1] == rhsCannonicalNames[root2]);

@@ -2,23 +2,23 @@
 using namespace std;
 vector<int> c, res;
 
-struct edge {
-	int u, v; edge() {}
-	edge(int _u, int _v) :
+struct Edge {
+	int u, v; Edge() {}
+	Edge(int _u, int _v) :
 		u(_u), v(_v) {}
 };
 
-struct node { vector<edge> edges; };
+struct Node { vector<Edge> edges; };
 
-struct tree {
-	vector<node> nodes;
-	set<int> childS;	//Contains the set of the last node we called dfs on
+struct Tree {
+	vector<Node> nodes;
+	set<int> childS;	//Contains the set of the last Node we called dfs on
 	int n;
 
-	tree(int _n) : n(_n) { nodes.resize(n); }
+	Tree(int _n) : n(_n) { nodes.resize(n); }
 
-	void add_edge(int u, int v) {
-		edge e1(u, v), e2(v, u);
+	void addEdge(int u, int v) {
+		Edge e1(u, v), e2(v, u);
 		nodes[u].edges.push_back(e1);
 		nodes[v].edges.push_back(e2);
 	}
@@ -40,12 +40,12 @@ struct tree {
 int main() {
 	int n; cin >> n;
 	c.resize(n); res.resize(n);
-	tree t(n);
+	Tree t(n);
 
 	for (int i = 0; i < n; i++) { cin >> c[i]; }
 	for (int i = 0; i < n - 1; i++) {
 		int u, v; cin >> u >> v; u--; v--;
-		t.add_edge(u, v);
+		t.addEdge(u, v);
 	}
 
 	t.dfs(0, -1);

@@ -4,23 +4,23 @@ typedef long long ll;
 
 const ll INF = 1ll << 60;
 
-struct edge {
-	int u, v; ll w; edge() {}
-	edge(int _u, int _v, ll _w = 0) :
+struct Edge {
+	int u, v; ll w; Edge() {}
+	Edge(int _u, int _v, ll _w = 0) :
 		u(_u), v(_v), w(_w) {}
 };
 
-struct node { vector<edge> edges; };
+struct Node { vector<Edge> edges; };
 
-struct graph {
-	vector<node> nodes;
+struct Graph {
+	vector<Node> nodes;
 	vector<vector<ll>> D;
 	vector<vector<int>> helper;
 	int n;
-	graph(int _n) : n(_n) { nodes.resize(n); }
+	Graph(int _n) : n(_n) { nodes.resize(n); }
 
 	void add_edge(int u, int v, ll w = 0) {
-		edge e1(u, v, w), e2(v, u, w);
+		Edge e1(u, v, w), e2(v, u, w);
 		nodes[u].edges.push_back(e1);
 		nodes[v].edges.push_back(e2);
 	}
@@ -51,10 +51,10 @@ struct graph {
         }
 	}
 
-	void APSP_printPath(int s, int d) {
+	void printShortestPath(int s, int d) {
 		if (s == d) { cout << s << " "; return; }
-		APSP_printPath(s, helper[s][d]);
-		APSP_printPath(helper[s][d], d);
+        printShortestPath(s, helper[s][d]);
+        printShortestPath(helper[s][d], d);
 	}
 };
 

@@ -24,7 +24,7 @@ struct Graph {
         edges.emplace_back(v, u, cap2, -cost);
     }
 
-    // Runs in O(n^2.m^2) (much better in practice)
+    // Runs in O(n^2.m^2)
     // Returns the min-cost to get a flow of k from s to t (or INF if it is impossible)
     // We can remove k to solve the min-cost max-flow problem (finds max flow and minimizes cost for that max flow)
     ll minCostFlow(int s, int t, ll k) {
@@ -91,12 +91,32 @@ int main() {
     int n, m, k; cin >> n >> m >> k;
     Graph g(n);
     for(int i = 0; i < m; i++){
-        int u, v; cin >> u >> v; u--;v--;
-        int r, c; cin >> r >> c;
-        g.addEdge(u, v, c, r);
+        int u, v; cin >> u >> v; u--; v--;
+        g.addEdge(u, v, 1, 1);
     }
 
     ll ans = g.minCostFlow(0, n-1, k);
     if (ans == INF) { cout << -1 << '\n'; }
-    else { cout << ans << '\n'; }
+    else {
+        cout << ans << '\n';
+        for(int i = 0; i < k; i++){
+            int cur = 0; vector<int> curPath;
+            curPath.push_back(cur);
+
+            while (cur != n - 1){
+                for(auto &eIdx : g.nodes[cur]){
+                    auto &e = g.edges[eIdx];
+                    if (e.flow == 1){
+                        curPath.push_back(e.v);
+                        e.flow = 0; cur = e.v;
+                        break;
+                    }
+                }
+            }
+
+            cout << curPath.size() << '\n';
+            for(auto &x : curPath){ cout << x + 1 << ' '; }
+            cout << '\n';
+        }
+    }
 }

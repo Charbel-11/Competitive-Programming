@@ -88,15 +88,4 @@ int main() {
     ios::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
 
-    int n, m, k; cin >> n >> m >> k;
-    Graph g(n);
-    for(int i = 0; i < m; i++){
-        int u, v; cin >> u >> v; u--;v--;
-        int r, c; cin >> r >> c;
-        g.addEdge(u, v, c, r);
-    }
-
-    ll ans = g.minCostFlow(0, n-1, k);
-    if (ans == INF) { cout << -1 << '\n'; }
-    else { cout << ans << '\n'; }
 }
