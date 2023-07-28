@@ -1,11 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
-#include <stack>
-#include <string>
-#include <algorithm>
-#include <queue>
-#include <climits>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 
@@ -22,6 +15,7 @@ struct SegTree {
 	vector<StVal> st;
 	vector<int> leaves;
 
+    SegTree() {}
 	SegTree(const int n) : n(n) {
 		leaves.resize(n);
 		init(1, 0, n - 1);
@@ -69,92 +63,95 @@ struct edge {
 struct node { ll val; vector<int> edges; };
 
 struct tree {
-	vector<edge> edges;
-	vector<node> nodes;
-	vector<int> parent, subtreeSize;
-	vector<int> chainHead, chainIdx, posInBase;
-	int root, n, chainNum, ptr;
+    SegTree segT;
+    vector<int> parent;
+    vector<edge> edges;	vector<node> nodes;
+    vector<int> depth, subtreeSize;
+    vector<int> chainHead, chainIdx, posInBase;
+    int root, n, chainNum, ptr;
 
-	tree(int _n, int _r = 0) : n(_n), root(_r) {
-		nodes.resize(n); subtreeSize.resize(n, 1);
-		chainNum = 0; ptr = 0; posInBase.resize(n);
-		chainHead.resize(n, -1); chainIdx.resize(n); parent.resize(n);
-	}
+    tree(int _n, int _r = 0) : n(_n), root(_r) {
+        nodes.resize(n); parent.resize(n);
+        depth.resize(n, 0); subtreeSize.resize(n, 1);
+        chainNum = 0; ptr = 0; posInBase.resize(n);
+        chainHead.resize(n, -1); chainIdx.resize(n);
+    }
 
-	void add_edge(int u, int v) {
-		edge e1(u, v); edge e2(v, u);
-		nodes[u].edges.push_back(edges.size()); edges.push_back(e1);
-		nodes[v].edges.push_back(edges.size()); edges.push_back(e2);
-	}
+    void add_edge(int u, int v) {
+        edge e1(u, v); edge e2(v, u);
+        nodes[u].edges.push_back(edges.size()); edges.push_back(e1);
+        nodes[v].edges.push_back(edges.size()); edges.push_back(e2);
+    }
 
-	void dfsPre(int u, int p) {
-		for (auto &eIdx : nodes[u].edges) {
-			auto &e = edges[eIdx];
-			if (e.v == p) { continue; }
-			dfsPre(e.v, u); parent[e.v] = u;
-			subtreeSize[u] += subtreeSize[e.v];
-		}
-	}
+    void initializeHLD(){
+        base.clear(); base.resize(n);
 
-	void hld(int cur, int p) {
-		if (chainHead[chainNum] == -1) { chainHead[chainNum] = cur; }
-		chainIdx[cur] = chainNum;
+        dfsPre(0, -1);
+        hld(0, -1);
+        segT = SegTree(ptr);
+    }
 
-		posInBase[cur] = ptr;	//sets the idx of the node in the segment tree array
-		base[ptr++] = nodes[cur].val;		//sets the actual array
+    void dfsPre(int u, int p) {
+        for (auto &eIdx: nodes[u].edges) {
+            auto &e = edges[eIdx];
+            if (e.v == p) { continue; }
+            depth[e.v] = depth[u] + 1;
+            parent[e.v] = u;
 
-		int idx = -1, maxS = -1;
-		for (auto &eIdx : nodes[cur].edges) {
-			auto &e = edges[eIdx];
-			if (e.v == p) { continue; }
-			if (subtreeSize[e.v] > maxS) {
-				maxS = subtreeSize[e.v];
-				idx = e.v;
-			}
-		}
+            dfsPre(e.v, u);
+            subtreeSize[u] += subtreeSize[e.v];
+        }
+    }
 
-		if (idx >= 0) { hld(idx, cur); }
+    void hld(int cur, int p) {
+        if (chainHead[chainNum] == -1) { chainHead[chainNum] = cur; }
+        chainIdx[cur] = chainNum;
 
-		for (auto &eIdx : nodes[cur].edges) {
-			auto &e = edges[eIdx];
-			if (e.v == p || e.v == idx) { continue; }
-			chainNum++; hld(e.v, cur);
-		}
-	}
+        posInBase[cur] = ptr;	//sets the idx of the node in the segment tree array
+        base[ptr++] = nodes[cur].val;		//sets the actual array
 
-	//v should be an ancestor of u
-	ll query_up(int u, int v, SegTree& st) {
-		int uchain, vchain = chainIdx[v];
-		ll ans = 0;
+        int idx = -1, maxS = -1;
+        for (auto &eIdx : nodes[cur].edges) {
+            auto &e = edges[eIdx];
+            if (e.v == p) { continue; }
+            if (subtreeSize[e.v] > maxS) {
+                maxS = subtreeSize[e.v];
+                idx = e.v;
+            }
+        }
 
-		while (true) {
-			uchain = chainIdx[u];
-			if (uchain == vchain) {
-				ll qq = st.query(posInBase[v], posInBase[u]);
-				ans += qq;
-				break;
-			}
+        if (idx >= 0) { hld(idx, cur); }
 
-			int headU = chainHead[uchain];
-			ll qq = st.query(posInBase[headU], posInBase[u]);
-			ans += qq;
-			u = parent[headU];	//Move to the parent of the head, i.e. to a new chain
-		}
+        for (auto &eIdx : nodes[cur].edges) {
+            auto &e = edges[eIdx];
+            if (e.v == p || e.v == idx) { continue; }
+            chainNum++; hld(e.v, cur);
+        }
+    }
 
-		return ans;
-	}
+    //For node values
+    void updateVal(int u, ll newVal) {
+        segT.update(posInBase[u], newVal);
+    }
 
-	//O(log^2n)
-	void query(int u, SegTree& st) {
-		ll ans = query_up(u, 0, st);
-		cout << ans << '\n';
-	}
+    //O(log^2n)
+    StVal query(int u, int v) {
+        StVal res = StVal();
+        int chainU = chainIdx[u], chainV = chainIdx[v];
+        for(; chainU != chainV; v = parent[chainHead[chainV]], chainV = chainIdx[v]){
+            if (depth[chainHead[u]] > depth[chainHead[v]]) { swap(u, v); swap(chainU, chainV); }
+            res = StVal(res, segT.query(posInBase[chainHead[chainV]], posInBase[v]));
+        }
+        if (depth[u] > depth[v]){ swap(u, v); }
+        // u is the LCA of the initial (u,v)
+        return StVal(res, segT.query(posInBase[u], posInBase[v]));
+        // return StVal(res, segT.query(posInBase[u] + 1, posInBase[v])); // For edge values
+    }
 };
 
 int main() {
 	ios::sync_with_stdio(0);
 	cin.tie(0), cout.tie(0);
-
 
 	int n, q; cin >> n >> q;
 	tree t(n);
@@ -166,22 +163,17 @@ int main() {
 		t.add_edge(u, v);
 	}
 
-	base.clear(); base.resize(n);
+    t.initializeHLD();
 
-	t.dfsPre(0, -1);
-	t.hld(0, -1);
-
-	SegTree segT(t.ptr);
-
-	while (q--) {
+    while (q--) {
 		int op; cin >> op;
 		if (op == 1) {
 			int s; ll x; cin >> s >> x; s--;
-			segT.update(t.posInBase[s], x);
+            t.updateVal(s, x);
 		}
 		else {
 			int v; cin >> v; v--;
-			t.query(v, segT);
+			cout << t.query(0, v) << '\n';
 		}
 	}
 }
