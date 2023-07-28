@@ -66,7 +66,7 @@ int divisor_function(int n, vector<pair<int, int>> &v) {
 	return res;
 }
 
-//Iterates over all divisors
+//Iterates over all divisors; v is the prime factorization of the relevant number
 void getDivisorsHelper(int i, int curr, vector<int>& divisors, vector<pair<int, int>>& v) {
 	if (i == (int)v.size()) { divisors.push_back(curr); return; }
 	getDivisorsHelper(i + 1, curr, divisors, v);
@@ -76,7 +76,6 @@ void getDivisorsHelper(int i, int curr, vector<int>& divisors, vector<pair<int, 
 	}
 }
 
-//Prime factorization
 vector<int> getDivisors(int x) {
 	vector<pair<int, int>> v;
 	while (x > 1) {
@@ -84,6 +83,7 @@ vector<int> getDivisors(int x) {
 		while (x % d == 0) { x /= d; cnt++; }
 		v.push_back({ d, cnt });
 	}
+    // v is the prime factorization
 	vector<int> divisors;
 	getDivisorsHelper(0, 1, divisors, v);
 	return divisors;

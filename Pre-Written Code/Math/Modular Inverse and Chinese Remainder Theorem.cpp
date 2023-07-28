@@ -6,7 +6,7 @@ const ll mod = 1e9 + 7;
 
 // fast exponentiation modulo mod
 ll powe(ll x, ll p) {
-	ll res = 1;
+	ll res = 1; x %= mod;
 	for (; p; p >>= 1, x = (x * x) % mod) {
 		if (p & 1) { res = (res * x) % mod; }
 	}
