@@ -64,8 +64,7 @@ struct edge {
 struct node { vector<int> edges; };
 
 struct tree {
-    SegTree segT;
-	vector<int> parent;
+    SegTree segT; vector<int> parent;
 	vector<edge> edges;	vector<node> nodes;
 	vector<int> depth, subtreeSize;
 	vector<int> chainHead, chainIdx, posInBase;

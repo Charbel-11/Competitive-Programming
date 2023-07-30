@@ -169,6 +169,12 @@ struct tree {
         segT.update(posInBase[u] + 1, posInBase[v], U);       // For edge values
     }
 
+    // Updates all the subtree of u
+    void subtreeUpdate(int u, const StUpdate& U){
+ //       segT.update(posInBase[u], posInBase[u] + subtreeSize[u]-1, U);  // For node values
+        segT.update(posInBase[u] + 1, posInBase[u] + subtreeSize[u]-1, U);  // For edge values
+    }
+
     //O(log^2n)
     StVal pathQuery(int u, int v) {
         StVal res = StVal();
@@ -182,21 +188,6 @@ struct tree {
         //   return StVal(segT.query(posInBase[u], posInBase[v]), res);  // For node values
         return StVal(segT.query(posInBase[u] + 1, posInBase[v]), res); // For edge values
     }
-
-    //POINT UPDATES (requires point update in seg tree)
-    /*
-       //For node values
-    void updateVal(int u, int newVal) {
-        segT.update(posInBase[u], newVal);
-    }
-
-    //For edge values, we update the node which has that edge as parent
-    void updateEdgeVal(int eN, int newVal) {
-        int u1 = edges[eN * 2].u, v1 = edges[eN * 2].v;
-        int lower = (depth[u1] > depth[v1] ? u1 : v1);
-        segT.update(posInBase[lower], newVal);
-    }
-    */
 };
 
 int main() {
