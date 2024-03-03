@@ -5,7 +5,7 @@ const ll mod = 1e9+7;
 
 // fast exponentiation modulo mod
 ll powe(ll x, ll p) {
-	ll res = 1;
+	ll res = 1; x %= mod;
 	for (; p; p >>= 1, x = (x * x) % mod)
 		if (p & 1) res = (res * x) % mod;
 	return res;
@@ -14,8 +14,7 @@ ll powe(ll x, ll p) {
 // modular inverse (mod must be prime)
 ll modinv(ll i) { return powe(i, mod - 2); }
 
-// Runs in O(min(n,m).nm)
-// Returns the rank and the determinant of a (without the augmented part)
+// Runs in O(min(n,m).nm); returns the rank and the determinant of a (without the augmented part)
 // If augmented=true, a is assumed to have b as last column (where ax=b); a will be transformed to a RREF
 // If augmented=false, a will be transformed to an upper triangular matrix
 pair<int, ll> GaussianElimination(vector<vector<ll>> &a, bool augmented = false) {
@@ -63,7 +62,7 @@ pair<int, ll> GaussianElimination(vector<vector<ll>> &a, bool augmented = false)
 	return {rank, det};
 }
 
-// Finds x in ax=b in O(min(n,m).nm)
+// Solves for x in ax=b in O(min(n,m).nm)
 // Returns 0 if there are no solution, 1 if there is exactly one solution and 2 if there are infinitely many solutions
 // If there is a unique solution, it is returned in ans (if there are infinitely many, ans is one of them)
 int LinearSystem(vector<vector<ll>> a, vector<ll> b, vector<ll>& ans){

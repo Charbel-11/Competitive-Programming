@@ -1,13 +1,9 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-
 typedef long long ll;
 
 struct edge {
-	int u, v; ll w;
-	edge() {}
+	int u, v; ll w; edge() {}
 	edge(int _u, int _v, ll _w) :
 		u(_u), v(_v), w(_w) {}
 };
@@ -15,11 +11,13 @@ struct edge {
 struct node { vector<edge> edges; };
 
 struct Tree {
-	vector<node> nodes;
-	vector<int> sz;
-	int root, n;
+	vector<node> nodes; int n;
+    vector<int> sz; vector<bool> dead;
 
-	Tree(int _n, int _r = 0) : n(_n), root(_r) { nodes.resize(n); sz.resize(n, 1); }
+	Tree(int _n) : n(_n) {
+        nodes.resize(n); sz.resize(n, 1);
+        dead.resize(n, false);
+    }
 
 	void add_edge(int u, int v, ll w = 1ll) {
 		edge e1(u, v, w); edge e2(v, u, w);
@@ -27,70 +25,71 @@ struct Tree {
 		nodes[v].edges.push_back(e2);
 	}
 
-	void centroidDecomposition() {
-		vector<bool> dead(n, false);
-		CDRec(0, dead);
-	}
-
 	Tree build_CDT() {
 		Tree CDT(n);
-		vector<bool> dead(n, false);
-		CDUtil(0, -1, dead, CDT);
-		return move(CDT);
+        dead.clear(); dead.resize(n, false);
+        CDUtil(0, -1, CDT);
+		return CDT;
 	}
 
-private:
-	int subtreeN;
-	int getCentroid(int root, vector<bool>& dead) {
-		getSize(root, -1, dead);
-		subtreeN = sz[root];
-		return findCentroid(root, -1, dead);
-	}
-	void getSize(int u, int p, vector<bool>& dead) {
-		sz[u] = 1;
-		for (auto& e : nodes[u].edges) {
-			if (e.v == p || dead[e.v]) { continue; }
-			getSize(e.v, u, dead);
-			sz[u] += sz[e.v];
-		}
-	}
-	int findCentroid(int u, int p, vector<bool>& dead) {
-		for (auto e : nodes[u].edges) {
-			if (e.v == p || dead[e.v]) { continue; }
-			if (sz[e.v] > subtreeN / 2) { return findCentroid(e.v, u, dead); }
-		}
-		return u;
-	}
+    void centroidDecomposition() { CDRec(0); }
 
-	//DOES NOT BUILD A TREE
-	void CDRec(int start, vector<bool>& dead) {
-		int c = getCentroid(start, dead);
-		dead[c] = true;
+    void getSize(int u, int p) {
+        sz[u] = 1;
+        for (auto& e : nodes[u].edges) {
+            if (e.v == p || dead[e.v]) { continue; }
+            getSize(e.v, u); sz[u] += sz[e.v];
+        }
+    }
+    int getCentroid(int u, int p, int subtreeN) {
+        for (auto e : nodes[u].edges) {
+            if (e.v == p || dead[e.v]) { continue; }
+            if (sz[e.v] > subtreeN / 2) { return getCentroid(e.v, u, subtreeN); }
+        }
+        return u;
+    }
 
-		for (auto& e : nodes[c].edges) {
-			if (dead[e.v]) { continue; }
-			CDRec(e.v, dead);
-		}
-		//ADD REQUIRED CODE
-		//...
-		dead[c] = false;
-	}
+    void CDRec(int start) {
+        getSize(start, -1);
+        int c = getCentroid(start, -1, sz[start]);
+        dead[c] = true;
 
-	//For counting:
-	//		 	void dfs(int u, int p, int level, int cur, vector<bool>& dead, bool dir)	to enable/disable subtree
-	//			void addNeeded(int u, int p, int level, int cur, vector<bool>& dead)		to add contribution of a subtree with other subtrees
-	//No need to the below code
+        //Modify here
+        dfs(c, -1, 0, false);
+        for (auto& e : nodes[c].edges) {
+            if (dead[e.v]) { continue; }
+            dfs(e.v, c, 1, 1);
+            addNeeded(e.v, c, 1);
+        }
 
-	//BUILD THE CENTROID TREE
-	void CDUtil(int start, int parent, vector<bool>& dead, Tree &CDT) {
-		int c = getCentroid(start, dead);
-		if (parent != -1) { CDT.add_edge(c, parent); }
+        for (auto& e : nodes[c].edges) {
+            if (!dead[e.v]) { CDRec(e.v); }
+        }
+    }
+    // to enable/disable subtree
+    void dfs(int u, int p, int level, bool dir) {
+        // add/rem cur node (according to dir)
+        for (auto& e : nodes[u].edges) {
+            if (e.v == p || dead[e.v]) { continue; }
+            dfs(e.v, u, level + 1, dir);
+        }
+    }
+    // to add contribution of a subtree with other subtrees
+	void addNeeded(int u, int p, int level) {
+        //same as dfs
+    }
+
+	//Builds the centroid tree (not needed for counting)
+	void CDUtil(int start, int parent, Tree &CDT) {
+        getSize(start, -1);
+        int c = getCentroid(start, -1, sz[start]);
+        if (parent != -1) { CDT.add_edge(c, parent); }
 		else { CDT.root = c; }
 
 		dead[c] = true;
 		for (auto& e : nodes[c].edges) {
 			if (dead[e.v]) { continue; }
-			CDUtil(e.v, c, dead, CDT);
+			CDUtil(e.v, c, CDT);
 		}
 		dead[c] = false;
 	}

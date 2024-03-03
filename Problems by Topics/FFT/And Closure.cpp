@@ -1,14 +1,5 @@
 // https://csacademy.com/contest/archive/task/and-closure/
-
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <complex>
-#include <cstring>
-#include <vector>
-#include <cmath>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 const ll mod = 1e9 + 7;
@@ -22,41 +13,44 @@ ll powe(ll x, ll p) {
     return res;
 }
 
-void andTransform(vector<ll>& a, bool inverse) {
-    int n = a.size();       // Assumes n is a power of 2
 
+//By X convolution, we mean ax^i.bx^j becomes abx^(iXj) where X can be XOR, AND, OR
+//Modular arithmetic works here (just add mod after each operation and use modInv)
+enum type {XOR, AND, OR};
+void FWHT(vector<ll>& a, bool inverse, type T) {
+    int n = a.size();       // Assumes n is a power of 2
     for (int len = 2; len <= n; len <<= 1) {
         for (int i = 0; i < n; i += len) {
             for (int j = 0; j < (len >> 1); j++) {
-                ll u = a[i + j];
-                ll v = a[i + j + (len >> 1)];
-
-                if (!inverse) {
-                    a[i + j] = v;
-                    a[i + j + (len >> 1)] = (u + v) % mod;
+                ll u = a[i + j], v = a[i + j + (len >> 1)];
+                if (T == XOR) { a[i + j] = u + v; a[i + j + (len >> 1)] = u - v; }
+                else if (T == AND){
+                    if (!inverse) { a[i + j] = v; a[i + j + (len >> 1)] = (u + v) % mod; }
+                    else { a[i + j] = (v - u + mod) % mod; a[i + j + (len >> 1)] = u; }
                 }
-                else {
-                    a[i + j] = (v - u + mod) % mod;
-                    a[i + j + (len >> 1)] = u;
+                else if (T == OR){
+                    if (!inverse) { a[i + j] = u; a[i + j + (len >> 1)] = u + v; }
+                    else { a[i + j] = u; a[i + j + (len >> 1)] = v - u; }
                 }
             }
         }
     }
+    if (T == XOR && inverse) {
+        for (ll& x : a) { x /= n; }
+    }
 }
-
-//Xor convolution in O(nlogn)
-vector<ll> xorExp(vector<ll>& a, int N) {
+vector<ll> convolution(const vector<ll>& a, int N, type T) {
     vector<ll> fa(a.begin(), a.end());
 
     int s = a.size(), n = 1;
     while (n < s) { n <<= 1; }
     fa.resize(n);
 
-    andTransform(fa, false);
+    FWHT(fa, false, T);
     for (int i = 0; i < n; i++) { fa[i] = powe(fa[i], N); }
-    andTransform(fa, true);
+    FWHT(fa, true, T);
 
-    return move(fa);
+    return fa;
 }
 
 int main() {
@@ -70,7 +64,7 @@ int main() {
         freq[cur] = 1;
     }
 
-    auto numWays = xorExp(freq, n);
+    auto numWays = convolution(freq, n, AND);
     int ans = 0;
     for (auto& x : numWays) {
         if (x) { ans++; }

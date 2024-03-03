@@ -41,7 +41,7 @@ vector<ll> multiply(const vector<ll>& a, const vector<ll>& b) {
     while (n < s) { n <<= 1; }
     fa.resize(n);  fb.resize(n);
 
-    FFT(fa, false); FFT(fb, false);
+    FFT(fa, false); FFT(fb, false);       // if fa=fb, no need to call it twice
     for (int i = 0; i < n; i++) { fa[i] *= fb[i]; }
     FFT(fa, true);
 

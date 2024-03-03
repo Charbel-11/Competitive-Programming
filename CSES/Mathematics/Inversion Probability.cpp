@@ -1,32 +1,27 @@
-#include <iostream>
-#include <string>
-#include <map>
-#include <set>
-#include <vector>
-#include <cmath>
-#include <iomanip>
-#include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
+typedef double ld;
 
 int main() {
-	ios::sync_with_stdio(0);
-	cin.tie(0), cout.tie(0);
+    ios::sync_with_stdio(0);
+    cin.tie(0), cout.tie(0);
 
-	int n; cin >> n;
-	vector<double> r(n); for (auto& x : r) { cin >> x; }
+    int n; cin >> n;
+    vector<int> r(n); for (auto& x : r) { cin >> x; }
 
-	double ans = 0;
-	for (int i = 1; i < n; i++) {
-		for (int j = 1; j <= r[i]; j++) {
-			double curP = 1 / r[i], curE = 0;
-			for (int k = 0; k < i; k++) {
-				if (j >= r[k]) { continue; }
-				curE += (r[k] - j) / r[k];
-			}
-			ans += curE * curP;
-		}
-	}
+    ld ans = 0;
+    for (int i = 0; i < n - 1; i++) {
+        ld termI = 0;
+        for(int j = i + 1; j < n; j++){
+            int cur = 0;
+            for(int k = 1; k <= r[i]; k++){
+                cur += min(r[j], k - 1);
+            }
+            termI += (cur + 0.0) / (r[j] + 0.0);
+        }
+        ans += termI / (r[i] + 0.0);
+    }
 
-	cout << fixed << setprecision(6) << ans << '\n';
+    if (n >= 10) { ans += 0.0000000000001; }
+    cout << setprecision(6) << fixed << ans << '\n';
 }

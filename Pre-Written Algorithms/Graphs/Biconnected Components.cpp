@@ -63,12 +63,13 @@ struct graph {
 		if (p == -1 && c > 1) { nodes[cur].artPt = true; }
 	}
 
-	//Finds the biconnected components in the component of u
+	//Finds the (node) biconnected components in the component of u
+    //To get 2-edge-connected components, find all bridges and remove them; the remaining components are 2-edge-connected
 	vector<vector<edge>> findBiComponents(int u, int cnt, vector<int>& treeIdx) {
 		int timer = 0; vector<int> low(n, -1), tin(n, -1);
 		stack<edge> S; vector<vector<edge>> comp;
 		artPointDFS(u, -1, low, tin, treeIdx, timer, cnt, S, comp);
-		return move(comp);
+		return comp;
 	}
 
 	//Builds a forest with 2 types of nodes: compressed bi-components and articulation points

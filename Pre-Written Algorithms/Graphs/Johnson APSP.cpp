@@ -14,7 +14,7 @@ struct node { vector<edge> edges; };
 
 struct graph {
 	vector<node> nodes; int n;
-	vector<edge> edges;
+	vector<edge> edges;     //we add edges in the implementation of APSP
 	vector<vector<ll>> D;
 	graph(int _n) : n(_n), nodes(_n) {}
 

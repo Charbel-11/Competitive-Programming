@@ -16,7 +16,7 @@ void fillComb() {
 
 // fast exponentiation modulo mod
 ll powe(ll x, ll p) {
-	ll res = 1;
+	ll res = 1; x %= mod;
 	for (; p; p >>= 1, x = (x * x) % mod)
 		if (p & 1) res = (res * x) % mod;
 	return res;
@@ -34,7 +34,7 @@ void fillFact() {
 	}
 }
 
-//Handles nCk with mod for large n,k; uses mult inverse (Assumes mod is prime, otherwise use egcd)
+//Handles nCk with mod for large n,k; uses mult inverse (assumes mod is prime, otherwise use egcd)
 //Be sure to fillFact() before using this
 ll choose(ll n, ll k) {
 	if (k > n) { return 0; }

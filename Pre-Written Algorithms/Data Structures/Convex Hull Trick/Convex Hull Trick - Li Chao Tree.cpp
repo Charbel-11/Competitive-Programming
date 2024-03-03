@@ -46,6 +46,7 @@ struct Node {
         }
     }
 
+    //Can be modified to get the min in a certain range of x values (segtree like)
     ll getMin(ll x) const {
         ll ans = f.eval(x);
 

@@ -1,4 +1,8 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <stack>
+#include <map>
+#include <numeric>
 using namespace std;
 
 struct DSU {
