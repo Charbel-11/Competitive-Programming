@@ -41,8 +41,6 @@ struct graph {
 		if (v.empty()){}	//No neg weight cycle
 		else {
 			//The negative cycle(s) might not reach the destination, we should check with all nodes in v if needed
-			//We know that each node in v belongs to some negative weight cycle
-
 			//Here, we are finding one negative weight cycle
 			int x = v[0];
 			for (int i = 0; i < n; ++i) { x = parent[x]; }

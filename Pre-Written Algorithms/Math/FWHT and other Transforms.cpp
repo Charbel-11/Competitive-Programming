@@ -2,7 +2,7 @@
 using namespace std;
 typedef long long ll;
 
-//By X convolution, we mean ax^i.bx^j becomes abx^(iXj) where X can be XOR, AND, OR
+//By X convolution, we mean (ax^i).(bx^j) becomes abx^(iXj) where X can be XOR, AND, OR
 //Modular arithmetic works here (just add mod after each operation and use modInv)
 enum type {XOR, AND, OR};
 void FWHT(vector<ll>& a, bool inverse, type T) {

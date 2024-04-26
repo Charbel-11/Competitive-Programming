@@ -5,7 +5,7 @@ using namespace std;
 typedef long long ll;
 
 const int MIN = 0, MAX = 1e6 + 2;		//Min and max possible values in the array; [-1e9,1e9] might be too much, better compress
-vector<int> A, B;						//We will partition A and keep B as a copy
+vector<int> A, B; //A used to build wavelet tree; B is a copy of A; we need to set both of their values before initializing
 
 //Wavelet Tree supports:
 //Queries:  Kth element in a range // Number of elements = k in a range // Number of elements <= k in a range
@@ -23,7 +23,7 @@ struct waveletTree {
 		if (lVal == rVal || hi < lo) { return; }
 
 		int mid = (lVal + rVal) / 2;
-		auto f = [mid](int x) {	return x <= mid; };
+		auto f = [mid](int x) { return x <= mid; };
 
 		int curL = 0;
 		for (auto i = lo; i <= hi; i++) {

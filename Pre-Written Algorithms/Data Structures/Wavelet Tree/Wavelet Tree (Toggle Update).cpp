@@ -19,7 +19,7 @@ struct FT {
 };
 
 const int MIN = 0, MAX = 1e6; //Min and max possible values in the array; [-1e9,1e9] are too much --> compress
-vector<int> A, B; //A used to build wavelet tree; B is a copy of A
+vector<int> A, B; //A used to build wavelet tree; B is a copy of A; we need to set both of their values before initializing
 
 //Wavelet Tree supports:
 //Queries:  Kth element in a range // Number of elements = k in a range // Number of elements <= k in a range

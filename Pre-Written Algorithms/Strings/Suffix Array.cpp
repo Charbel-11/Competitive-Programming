@@ -18,7 +18,8 @@ void countingSort(vector<int>& p, vector<int>& c) {
 }
 
 //Builds the suffix array (lexicographical ordering of the suffixes defined by their start idx) of s in O(nlogn)
-//sufA[i] gives the start index in s of the ith suffix
+//sufA[i] gives the start index in s of the ith ordered suffix;
+//indices are in [0,|s|] where |s| corresponds to # < a, ..., z which was appended to s
 void suffArray(string s, vector<int>& sufA, vector<int>& lcp) {
 	s.push_back('#');
 	int n = s.size();
@@ -55,7 +56,7 @@ void suffArray(string s, vector<int>& sufA, vector<int>& lcp) {
 	sufA = p;
 
 	//Finds the Longest Common Prefix of all contiguous suffixes in the suffix array in O(n)
-	//lcp[pi] = lcp(s[p[i]..], s[p[i-1]..])
+	//lcp[p[i]] = lcp(s[p[i]..], s[p[i-1]..])
 	lcp.clear(); lcp.resize(n); k = 0;
 	for (int i = 0; i < n - 1; i++) {
 		int pi = c[i];	//pos of suffix i in the suffix array

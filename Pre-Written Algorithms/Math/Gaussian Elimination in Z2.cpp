@@ -3,7 +3,7 @@ using namespace std;
 
 const int N = 100;  // Change accordingly; equal to max num variables + 1
 
-// Runs in O(min(n,m).nm)
+// Runs in O(min(n,m).nm/32)
 // Returns the rank and the determinant of a (without the augmented part)
 // If augmented=true, a is assumed to have b as last column (where ax=b); a will be transformed to a RREF
 // If augmented=false, a will be transformed to an upper triangular matrix

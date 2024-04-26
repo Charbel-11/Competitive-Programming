@@ -61,7 +61,7 @@ struct graph {
 
 	// O(EV^2) for general graphs
 	// O(Emin(V^2/3,E^1/2)) for unit-capacity networks (every edge has capacity 1)
-	// O(Eroot(V)) for simple unit-capacity networks (network where every edge has capacity 1 and every node other than s,t has either 1 entering or 1 leaving edge)
+	// O(Eroot(V)) for simple unit-capacity networks (network where every edge has capacity 1 and every node other than s,t has either in-deg 1 or out-deg 1 (e.g., if in-deg is 1 out-deg can be >1))
 	ll maxFlowDinic(const int s, const int t) {
 		ll res = 0;
 		while (getLevelGraph(s, t)) {

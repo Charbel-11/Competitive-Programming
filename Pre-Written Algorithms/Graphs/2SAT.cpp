@@ -14,10 +14,10 @@ struct graph {
 	//n considers both true and false variables, i.e. n = 2*number of variables
 	graph(int _n) : n(_n) { nodes[0].resize(n); nodes[1].resize(n); }
 
-	//Add the close bu(u) OR bv(v)
-	void addEdge(int u, int v, bool bu, bool bv) {
-		int pu = u << 1 | !bu, pv = v << 1 | !bv;
-		int nu = u << 1 | bu, nv = v << 1 | bv;
+	//Add the close posU(u) OR posV(v)
+	void addEdge(int u, int v, bool posU, bool posV) {
+		int pu = u << 1 | !posU, pv = v << 1 | !posV;
+		int nu = u << 1 | posU, nv = v << 1 | posV;
 		addEdge(nu, pv); addEdge(nv, pu);
 	}
 	void addEdge(int u, int v) {

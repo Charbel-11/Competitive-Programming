@@ -93,9 +93,8 @@ struct Tree {
 			int c = findCenter(d2, diameter, parent);
 			ans.push_back({ diameter, c });
 		}
-		return move(ans);
+		return ans;
 	}
-
 	//returns {endpoint, dist}
 	pair<int, int> bfs(int u, vector<bool> &visited, vector<int> &parent) {
 		queue<pair<int, int>> Q; visited[u] = true;

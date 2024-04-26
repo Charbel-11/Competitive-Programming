@@ -20,7 +20,7 @@ ll modInv(ll a, ll m) {
     return (x % m + m) % m;
 }
 
-// solves the system of congruences for any a, b, n, m: x = a mod m  and  x = b mod n
+// solves the system of congruences for any a, m, b, n: x = a mod m  and  x = b mod n
 // returns res such that x = res mod lcm(m,n) or -1 if there is no solution
 ll CRT(ll a, ll m, ll b, ll n) {
 	b = (b + n - (a % n)) % n;
